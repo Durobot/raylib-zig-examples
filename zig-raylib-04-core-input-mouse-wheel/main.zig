@@ -40,7 +40,7 @@ pub fn main() void
         // Update
         //----------------------------------------------------------------------------------
         // @round() is optional, i guess?
-        // Since scroll is an integer constant, there's no sense in coercing it to f32,
+        // Since scroll_speed is an integer constant, there's no sense in coercing it to f32,
         // multiplying GetMouseWheelMove()'s result (f32) by it and then coercing the result
         // back to integer (c_int).
         ball_pos_y -= @floatToInt(c_int, @round(c.GetMouseWheelMove())) * scroll_speed;
