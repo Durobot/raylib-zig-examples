@@ -1,1 +1,158 @@
-# raylib-zig-examples
+#### Raylib Zig Examples
+
+These are some of [raylib](https://www.raylib.com/) ([raylib on github](https://github.com/raysan5/raylib)) [examples](https://www.raylib.com/examples.html) ported to [Zig](https://ziglang.org/).
+
+They don't use any bindings or some other intermediate layer between Zig code and raylib. Instead, Zig's built-in translate-C feature takes care of everything (well, almost, see below).
+
+I have done some minor modifications to the code, like changing camelCase variable names to snake_case, to fit Zig naming conventions.
+
+Some of the examples are presented in multiple versions (14a and 14b; 54a and 54b; 87a and 87b), see the comments in the Zig code.
+
+To make things easier, some of the examples come withl resource files, necessary to run them. Their authors are credited below:
+
+| resource                       | examples   | author                                                       | licence                                                     | notes                                                        |
+| ------------------------------ | ---------- | ------------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------------------ |
+| raylib_logo.png                | 46, 50, 53 | [@raysan5](https://github.com/raysan5) (?)                   | ?                                                           |                                                              |
+| fudesumi.raw                   | 54a, 54b   | [Eiden Marsal](https://www.artstation.com/marshall_z)        | [CC-BY-NC](https://creativecommons.org/licenses/by-nc/4.0/) |                                                              |
+| road.png                       | 68         | ?                                                            | ?                                                           |                                                              |
+| fonts/alagard.png              | 69         | Hewett Tsoi                                                  | [Freeware](https://www.dafont.com/es/alagard.font)          | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| fonts/alpha_beta.png           | 69         | [Brian Kent (AEnigma)](https://www.dafont.com/es/aenigma.d188) | [Freeware](https://www.dafont.com/es/alpha-beta.font)       | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| fonts/jupiter_crash.png        | 69         | [Brian Kent (AEnigma)](https://www.dafont.com/es/aenigma.d188) | [Freeware](https://www.dafont.com/es/jupiter-crash.font)    | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| fonts/mecha.png                | 69         | Captain Falcon                                               | [Freeware](https://www.dafont.com/es/mecha-cf.font)         | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| fonts/pixantiqua.ttf           | 69         | Gerhard Großmann                                             | [Freeware](https://www.dafont.com/es/pixantiqua.font)       | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| fonts/pixelplay.png            | 69         | Aleksander Shevchuk                                          | [Freeware](https://www.dafont.com/es/pixelplay.font)        | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| fonts/romulus.png              | 69         | Hewett Tsoi                                                  | [Freeware](https://www.dafont.com/es/romulus.font)          | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| fonts/setback.png              | 69         | [Brian Kent (AEnigma)](https://www.dafont.com/es/aenigma.d188) | [Freeware](https://www.dafont.com/es/setback.font)          | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| custom_alagard.png             | 70         | [Brian Kent (AEnigma)](https://www.dafont.com/es/aenigma.d188) | [Freeware](https://www.dafont.com/es/jupiter-crash.font)    | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| custom_jupiter_crash.png       | 70         | [Brian Kent (AEnigma)](https://www.dafont.com/es/aenigma.d188) | [Freeware](https://www.dafont.com/es/jupiter-crash.font)    | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| custom_mecha.png               | 70         | [Brian Kent (AEnigma)](https://www.dafont.com/es/aenigma.d188) | [Freeware](https://www.dafont.com/es/jupiter-crash.font)    | Atlas created by [@raysan5](https://github.com/raysan5)      |
+| KAISG.ttf                      | 71         | [Dieter Steffmann](http://www.steffmann.de/wordpress/)       | [Freeware](https://www.1001fonts.com/users/steffmann/)      | [Kaiserzeit Gotisch](https://www.dafont.com/es/kaiserzeit-gotisch.font) font |
+| pixantiqua.fnt, pixantiqua.png | 72         | Gerhard Großmann                                             | [Freeware](https://www.dafont.com/es/pixantiqua.font)       | Atlas made with [BMFont](https://www.angelcode.com/products/bmfont/) by [@raysan5](https://github.com/raysan5) |
+| pixantiqua.ttf                 | 72         | Gerhard Großmann                                             | [Freeware](https://www.dafont.com/es/pixantiqua.font)       |                                                              |
+| cubicmap.png                   | 84, 85     | [@raysan5](https://github.com/raysan5)                       | [CC0](https://creativecommons.org/publicdomain/zero/1.0/)   |                                                              |
+| cubicmap_atlas.png             | 84, 85     | [@emegeme](https://github.com/emegeme)                       | [CC0](https://creativecommons.org/publicdomain/zero/1.0/)   |                                                              |
+
+
+
+#### Building the examples
+
+**Note**: some examples require additional header files. I recommend downloading them to the corresponding example's folder, as described in the comments in Zig code. Examples 39, 40, 41 need `reasings.h` from https://github.com/raysan5/raylib/blob/master/examples/others/reasings.h; examples 42, 43, 44 need `raygui.h` from https://github.com/raysan5/raygui/blob/master/src/raygui.h.
+
+Also, please note that because of [a bug](https://github.com/ziglang/zig/issues/15408) in Zig translate-c functionality, you will have to apply manual corrections to `cimport.zig`, as described in the comments in Zig code in examples 42, 43, 44. Notice that Zig may create several instances of cimport.zig when compiling examples, found in in different locations. Fixing just one of these files won't fix compilation for other examples. In this case, apply the fix to all instance of cimport.zig.
+
+**On Linux**:
+
+1. Install Zig. Version 0.11 is required. At the time of writing (May 2023), Zig 0.11 has not been released yet, but development builds of Zig 0.11 are available. The easiest way to install one of them is to just download the latest archived Zig for your OS from https://ziglang.org/download/. Most likely it will be named **zig-linux-x86_64-0.11.\*-dev\*.tar.xz**.
+
+   Unpack it and add this folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
+
+   `export PATH="$PATH:/path/to/zig"`
+
+   Alternatively, you can install Zig from your distribution's repositories, if they contain Zig 0.11.
+   
+2. Install raylib. These examples were built using raylib 4.5.0, but an earlier or later version may work too. Use one of the following methods:
+   
+   1. Install it from your distribution's repositories. For example on Arch you can do it with `pacman -S raylib` command.
+   
+      You then should be able to build examples by running `zig build-exe main.zig -lc -lraylib` in each example's folder. To build using `build_example.sh`, (optionally) edit this file, setting `RAYLIB_PATH`, `RAYLIB_INCLUDE_PATH`, `RAYLIB_EXTERNAL_INCLUDE_PATH` and `RAYLIB_LIB_PATH` variables to '' (empty string). To build using `build.sh` found in each folder, (optionally) edit build.sh, setting `tmp_raylib_path`, `tmp_raylib_include_path`, `tmp_raylib_external_include_path` and `tmp_raylib_lib_path` variables to '' (empty string) at lines 12 - 15.
+   
+       Alternatively, you can
+   
+   2. Build raylib from source code. Download raylib [from github](https://github.com/raysan5/raylib/tags). Click "tar.gz" under the release you want to download, or click "Downloads", then scroll down and click "Source code (tar.gz)". Unpack the downloaded archive.
+   
+      Now, in order to make raylib and/or raylib-zig-examples compile without errors, do one of the following two things, depending on your version of raylib:
+      
+      1. **If** `build.zig` In the root folder **contains** the following lines:
+      
+         ```zig
+         const lib = raylib.addRaylib(b, target, optimize);
+         lib.installHeader("src/raylib.h", "raylib.h");
+         lib.install();
+         ```
+      
+         then edit this file - remove or comment out this line: `lib.install();`
+         Add these lines below it, before the closing `}`:
+      
+         ```zig
+         lib.installHeader("src/rlgl.h", "rlgl.h");
+         lib.installHeader("src/raymath.h", "raymath.h");
+         lib.installHeader("src/rcamera.h", "rcamera.h");
+         b.installArtifact(lib);
+         ```
+      
+      2. **If**, on the other hand, build.zig in raylib's root folder **does not** contain `lib.install();` (see [this commit](https://github.com/raysan5/raylib/commit/6b92d71ea1c4e3072b26f25e7b8bd1d1aa8e781f)), then in `src/build.zig`, in function `pub fn build(b: *std.Build) void`, after `lib.installHeader("src/raylib.h", "raylib.h");`, add these lines:
+      
+         ```
+         lib.installHeader("src/rlgl.h", "rlgl.h");
+         lib.installHeader("src/raymath.h", "raymath.h");
+         lib.installHeader("src/rcamera.h", "rcamera.h");
+         ```
+      
+      In raylib root folder, run `zig build -Doptimize=ReleaseSmall` or `zig build -Doptimize=ReleaseFast`. You could also use `-Doptimize=ReleaseSafe`, `-Doptimize=Debug` or simply run `zig build`.
+      
+      This should create `zig-out` folder, with two folders inside: `include` and `lib`, these contain raylib header files and static library, respectively.
+      
+      In `raylib-zig-examples`, in `build_example.sh`set `RAYLIB_PATH` variable to the raylib path and make sure the values of `RAYLIB_INCLUDE_PATH`, `RAYLIB_EXTERNAL_INCLUDE_PATH` and `RAYLIB_LIB_PATH` make sense.
+   
+3. Build the examples.  You can use `build_example.sh` to either build individual examples by providing the example number, e.g. `./build_example.sh 03`, or build them all: `./build_example.sh all`.
+
+   You can also run `build.sh` contained in each example's folder. raylib paths and Zig build mode set within each build.sh are used in this case.
+
+   `clean_all.sh` and `clean.sh` in examples' folders can be used to delete binaries generated by the compiler.
+
+**On Windows**:
+
+1. Install Zig. Version 0.11 is required. At the time of writing (May 2023), Zig 0.11 has not been released yet, but development builds of Zig 0.11 are available. The easiest way to install one of them is to just download the latest archived Zig for your OS from https://ziglang.org/download/. Most likely it will be named **zig-windows-x86_64-0.11.\*-dev\*.zip**.
+
+   Unpack it and add this folder to environment variable PATH.
+
+2. Install raylib. These examples were built using raylib 4.5.0, but an earlier or later version may work too. 
+
+   Build raylib from source code. Download raylib [from github](https://github.com/raysan5/raylib/tags). Click "zip" under the release you want to download, or click "Downloads", then scroll down and click "Source code (zip)".
+
+   Unpack the downloaded archive. Now, in order to make raylib and/or raylib-zig-examples compile without errors, do one of the following two things, depending on your version of raylib:
+
+   1. **If** `build.zig` In the root folder **contains** the following lines:
+
+      ```zig
+      const lib = raylib.addRaylib(b, target, optimize);
+      lib.installHeader("src/raylib.h", "raylib.h");
+      lib.install();
+      ```
+
+      then edit this file - remove or comment out this line: `lib.install();`
+      Add these lines below it, before the closing `}`:
+
+      ```zig
+      lib.installHeader("src/rlgl.h", "rlgl.h");
+      lib.installHeader("src/raymath.h", "raymath.h");
+      lib.installHeader("src/rcamera.h", "rcamera.h");
+      b.installArtifact(lib);
+      ```
+
+   2. **If**, on the other hand, build.zig in raylib's root folder **does not** contain `lib.install();` (see [this commit](https://github.com/raysan5/raylib/commit/6b92d71ea1c4e3072b26f25e7b8bd1d1aa8e781f)), then in `src/build.zig`, in function `pub fn build(b: *std.Build) void`, after `lib.installHeader("src/raylib.h", "raylib.h");`, add these lines:
+
+      ```
+      lib.installHeader("src/rlgl.h", "rlgl.h");
+      lib.installHeader("src/raymath.h", "raymath.h");
+      lib.installHeader("src/rcamera.h", "rcamera.h");
+      ```
+
+   In raylib root folder, run `zig build -Doptimize=ReleaseSmall` or `zig build -Doptimize=ReleaseFast`.
+
+      **Warning**: leaving out `-Doptimize` parameter, using `-Doptimize=Debug` or `-Doptimize=ReleaseSafe` currently causes compilation of raylib-zig-examples to fail in ReleaseSmall and ReleaseFast modes down the road. You will see errors similar to these:
+
+   ```
+   error: lld-link: undefined symbol: __stack_chk_fail
+   error: lld-link: undefined symbol: __stack_chk_guard
+   ```
+
+   Running `zig build...` should create `zig-out` folder, with two folders inside: `include` and `lib`, these contain raylib header files and static library, respectively.
+
+   In `raylib-zig-examples`, in `build_example.sh`set `RAYLIB_PATH` variable to the raylib path and make sure the values of `RAYLIB_INCLUDE_PATH`, `RAYLIB_EXTERNAL_INCLUDE_PATH` and `RAYLIB_LIB_PATH` make sense.
+
+3. Build the examples.  You can use `build_example.bat` to either build individual examples by providing the example number, e.g. `build_example.bat 03`, or build them all: `build_example.bat all`.
+
+   You can also run `build.bat` contained in each example's folder. raylib paths and Zig build mode set within each build.bat are used in this case.
+
+   `clean_all.bat` and `clean.bat` in examples' folders can be used to delete binaries generated by the compiler.
