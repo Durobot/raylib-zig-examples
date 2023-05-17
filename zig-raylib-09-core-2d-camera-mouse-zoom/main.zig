@@ -34,6 +34,8 @@ pub fn main() void
     c.InitWindow(screen_width, screen_height, "raylib [core] example - 2d camera mouse zoom");
     defer c.CloseWindow();
 
+    // Explicitly initializing struct fields is better,
+    // but we can also do this:
     var camera = comptime std.mem.zeroes(c.Camera2D);
     camera.zoom = 1.0;
 
