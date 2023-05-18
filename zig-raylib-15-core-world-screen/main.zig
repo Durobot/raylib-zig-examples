@@ -77,7 +77,7 @@ pub fn main() void
                                 @floatToInt(c_int, cube_scr_pos.x), @floatToInt(c_int, cube_scr_pos.y)),
                    10, 10, 20, c.LIME);
         c.DrawText("Text 2d should be always on top of the cube", 10, 40, 20, c.GRAY);
-        c.DrawFPS(10, 10);
+        c.DrawFPS(screen_width - 100, 10);
         //---------------------------------------------------------------------------------
     }
 }
