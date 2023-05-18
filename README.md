@@ -38,6 +38,17 @@ To make things easier, some of the examples come withl resource files, necessary
 
 **Note**: some examples require additional header files. I recommend downloading them to the corresponding example's folder, as described in the comments in Zig code. Examples 39, 40, 41 need `reasings.h` from https://github.com/raysan5/raylib/blob/master/examples/others/reasings.h; examples 42, 43, 44 need `raygui.h` from https://github.com/raysan5/raygui/blob/master/src/raygui.h.
 
+In other words, the following additional header files are necessary for their respective examples to build:
+
+```
+zig-raylib-39-shapes-easings-ball_anim/reasings.h
+zig-raylib-40-shapes-easings-box_anim/reasings.h
+zig-raylib-41-shapes-easings-rectangle_array/reasings.h
+zig-raylib-42-shapes-draw-ring/raygui.h
+zig-raylib-43-shapes-draw-circle_sector/raygui.h
+zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
+```
+
 Also, please note that because of [a bug](https://github.com/ziglang/zig/issues/15408) in Zig translate-c functionality, you will have to apply manual corrections to `cimport.zig`, as described in the comments in Zig code in examples 42, 43, 44. Notice that Zig may create several instances of cimport.zig when compiling examples, found in in different locations. Fixing just one of these files won't fix compilation for other examples. In this case, apply the fix to all instance of cimport.zig.
 
 **On Linux**:
@@ -82,7 +93,7 @@ Also, please note that because of [a bug](https://github.com/ziglang/zig/issues/
       
       2. **If**, on the other hand, build.zig in raylib's root folder **does not** contain `lib.install();` (see [this commit](https://github.com/raysan5/raylib/commit/6b92d71ea1c4e3072b26f25e7b8bd1d1aa8e781f)), then in `src/build.zig`, in function `pub fn build(b: *std.Build) void`, after `lib.installHeader("src/raylib.h", "raylib.h");`, add these lines:
       
-         ```
+         ```zig
          lib.installHeader("src/rlgl.h", "rlgl.h");
          lib.installHeader("src/raymath.h", "raymath.h");
          lib.installHeader("src/rcamera.h", "rcamera.h");
@@ -132,7 +143,7 @@ Also, please note that because of [a bug](https://github.com/ziglang/zig/issues/
 
    2. **If**, on the other hand, build.zig in raylib's root folder **does not** contain `lib.install();` (see [this commit](https://github.com/raysan5/raylib/commit/6b92d71ea1c4e3072b26f25e7b8bd1d1aa8e781f)), then in `src/build.zig`, in function `pub fn build(b: *std.Build) void`, after `lib.installHeader("src/raylib.h", "raylib.h");`, add these lines:
 
-      ```
+      ```zig
       lib.installHeader("src/rlgl.h", "rlgl.h");
       lib.installHeader("src/raymath.h", "raymath.h");
       lib.installHeader("src/rcamera.h", "rcamera.h");
