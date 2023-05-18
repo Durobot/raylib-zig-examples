@@ -28,7 +28,7 @@ pub fn main() void
     const screen_width = 800;
     const screen_height = 450;
 
-    c.InitWindow(screen_width, screen_height, "raylib [text] example - input box");
+    c.InitWindow(screen_width, screen_height, "raylib [text] example - text writing anim");
     defer c.CloseWindow(); // Close window and OpenGL context
 
     const message: [*:0]const u8 = "This sample illustrates a text writing\nanimation effect! Check it out! ;)";
