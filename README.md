@@ -2,7 +2,9 @@
 
 These are some of [raylib](https://www.raylib.com/) ([raylib on github](https://github.com/raysan5/raylib)) [examples](https://www.raylib.com/examples.html) ported to [Zig](https://ziglang.org/).
 
-They don't use any bindings or some other intermediate layer between Zig code and raylib. Instead, Zig's built-in translate-C feature takes care of everything (well, almost, see below).
+[See the screenshot gallery](https://github.com/Durobot/raylib-zig-examples/blob/main/sshots.md)!
+
+The examples don't use any bindings or some other intermediate layer between Zig code and raylib. Instead, Zig's built-in translate-C feature takes care of everything (well, almost, see below).
 
 I have done some minor modifications to the code, like changing camelCase variable names to snake_case, to fit Zig naming conventions.
 

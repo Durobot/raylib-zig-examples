@@ -1,4 +1,4 @@
-#### Screenshots gallery
+#### Screenshot gallery
 
 <img src="https://raw.githubusercontent.com/Durobot/raylib-zig-examples/main/sshots/01.png" alt="01 - Basic window" style="zoom:50%;" /> <img src="https://raw.githubusercontent.com/Durobot/raylib-zig-examples/main/sshots/02.png" alt="02 - Keyboard input" style="zoom:50%;" />
 
