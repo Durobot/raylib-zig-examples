@@ -18,12 +18,11 @@
 //*
 //********************************************************************************************/
 
-
 // Download raygui.h from https://github.com/raysan5/raygui/tree/master/src and copy it to this project's folder.
 // Build with `zig build-exe main.zig -idirafter ./ -lc -lraylib`
 
 // WARNING: unless this bug in Zig transtale - https://github.com/ziglang/zig/issues/15408 - has been fixed,
-// you're going to see this error:
+// you're going to see errors similar to this:
 
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:27: error: incompatible types: 'c_int' and 'f32'
 //                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @intToFloat(f32, valueRange);
@@ -36,16 +35,34 @@
 //                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Zig incorrectly skips type coercion when translating certain C code in raygui.h.
-// As a workaround edit the line in cimport.zig mentioned in the error message, manually adding necessary type coercion:
+// As a workaround, edit raygui.h you have downloaded to this example's folder:
+// Find the body of the function that causes Zig translate-c to stumble (currently it's `static int GuiScrollBar`, on line 4442),
+// then within it, find the lines that are causing the issue (currently lines 4516, 4517):
+//
+// if (isVertical) value += (GetMouseDelta().y/(scrollbar.height - slider.height)*valueRange);
+// else value += (GetMouseDelta().x/(scrollbar.width - slider.width)*valueRange);
+
+// below them, two more lines (currently lines 4553, 4554):
+//
+// if (isVertical) value += (GetMouseDelta().y/(scrollbar.height - slider.height)*valueRange);
+// else value += (GetMouseDelta().x/(scrollbar.width - slider.width)*valueRange);
+
+// Add explicit type cast `(int)` to the value added to `value` variable in each of the 4 lines like this:
+//
+// if (isVertical) value += (int)(GetMouseDelta().y/(scrollbar.height - slider.height)*valueRange);
+// else value += (int)(GetMouseDelta().x/(scrollbar.width - slider.width)*valueRange);
+
+// This should fix the issue.
+
+// Alternatively, edit the lines in cimport.zig mentioned in the error message, manually adding necessary type coercion:
 // value += @floatToInt(c_int, (GetMouseDelta().y / (scrollbar.height - slider.height)) * @intToFloat(f32, valueRange));
 //
-// Also correct the line below it:
+// Also correct the lines below it:
 // value += (GetMouseDelta().x / (scrollbar.width - slider.width)) * @intToFloat(f32, valueRange);
 // Add similar type coercion:
 // value += @floatToInt(c_int, (GetMouseDelta().x / (scrollbar.width - slider.width)) * @intToFloat(f32, valueRange));
 //
-// Yet another, similar code snippet was added in recent versions of raygui.h, leading to more of the same error,
-// apply the same modification to each line where it is needed.
+// Apply the same modification to each line where it is needed.
 //
 // Save cimport.zig and build the project again, it should compile without errors.
 

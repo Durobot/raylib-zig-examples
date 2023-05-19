@@ -6,6 +6,8 @@ These are some of [raylib](https://www.raylib.com/) ([raylib on github](https://
 
 The examples don't use any bindings or some other intermediate layer between Zig code and raylib. Instead, Zig's built-in translate-C feature takes care of everything (well, almost, see below).
 
+For whatever reason, example [27](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-27-core-custom-frame-control) (custom frame control) does not work properly on Windows, and runs with certain jerkiness on Linux. My knowledge of raylib is not enough to figure out why.
+
 I have done some minor modifications to the code, like changing camelCase variable names to snake_case, to fit Zig naming conventions.
 
 Some of the examples are presented in multiple versions ([14a](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-14a-core-3d-picking-(original)) and [14b](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-14b-core-3d-picking-(2-cubes)); [54a](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-54a-textures-texture-from-raw-data-(comptime-init)) and [54b](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-54b-textures-texture-from-raw-data-(runtime-init)); [87a](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-87a-models-mesh-generation-(MemAlloc-calloc)) and [87b](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-87b-models-mesh-generation-(Zig-allocator))), see the comments in the Zig code.
@@ -51,7 +53,34 @@ zig-raylib-43-shapes-draw-circle_sector/raygui.h
 zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 ```
 
-Also, please note that because of [a bug](https://github.com/ziglang/zig/issues/15408) in Zig translate-c functionality, you will have to apply manual corrections to `cimport.zig`, as described in the comments in Zig code in examples [42](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-42-shapes-draw-ring), [43](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-43-shapes-draw-circle_sector), [44](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-44-shapes-draw-rectangle_rounded). Notice that Zig may create several instances of cimport.zig when compiling examples, found in in different locations. Fixing just one of these files won't fix compilation for other examples. In this case, apply the fix to all instance of cimport.zig.
+**Also**, please note that because of [a bug](https://github.com/ziglang/zig/issues/15408) in Zig translate-c functionality, you won't be able to compile raygui examples ([42](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-42-shapes-draw-ring), [43](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-43-shapes-draw-circle_sector), [44](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-44-shapes-draw-rectangle_rounded)).
+
+One way to fix this issue is by modifying `raygui.h` you have downloaded to `zig-raylib-42-shapes-draw-ring`, `zig-raylib-43-shapes-draw-circle_sector` and `zig-raylib-44-shapes-draw-rectangle_rounded`. Find the body of the function that causes Zig translate-c to stumble (currently it's `static int GuiScrollBar`, on line 4442), then within it, find the lines that are causing the issue (currently lines 4516, 4517):
+
+```c
+if (isVertical) value += (GetMouseDelta().y/(scrollbar.height - slider.height)*valueRange);
+else value += (GetMouseDelta().x/(scrollbar.width - slider.width)*valueRange);
+```
+
+below them, two more lines (currently lines 4553, 4554):
+
+```c
+if (isVertical) value += (GetMouseDelta().y/(scrollbar.height - slider.height)*valueRange);
+else value += (GetMouseDelta().x/(scrollbar.width - slider.width)*valueRange);
+```
+
+Add explicit type cast `(int)` to the value added to `value` variable in each of the 4 lines like this:
+
+```c
+if (isVertical) value += (int)(GetMouseDelta().y/(scrollbar.height - slider.height)*valueRange);
+else value += (int)(GetMouseDelta().x/(scrollbar.width - slider.width)*valueRange);
+```
+
+Examples [42](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-42-shapes-draw-ring), [43](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-43-shapes-draw-circle_sector), [44](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-44-shapes-draw-rectangle_rounded) should now build and run without issues.
+
+Alternatively, you can apply manual corrections to `cimport.zig`, as described in the comments in Zig code in examples [42](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-42-shapes-draw-ring), [43](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-43-shapes-draw-circle_sector), [44](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-44-shapes-draw-rectangle_rounded). Notice that Zig may create several instances of cimport.zig when compiling examples, found in in different locations. Fixing just one of these files won't fix compilation for other examples. In this case, apply the fix to all instance of cimport.zig.
+
+This method didn't work for me on one of my Windows machines, where Zig kept re-generating `cimport.zig`, overwriting my edits.
 
 **On Linux**:
 
