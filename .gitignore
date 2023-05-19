@@ -1,3 +1,6 @@
+# C headers (don't commit them, they're from raylib!)
+*.h
+
 # Prerequisites
 *.d
 
