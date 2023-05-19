@@ -1,57 +1,55 @@
 #### Screenshot gallery
 
-[<img src="thumbs/th_01.jpg">](01.png)
+[<img src="thumbs/th_01.jpg">](01.png) [<img src="thumbs/th_02.jpg">](02.png)
 
-[![th_01](thumbs/th_01.jpg)](01.jpg) [<img src="thumbs/th_02.jpg">](http://google.com/)  ![th_02](thumbs/th_02.jpg)
+[<img src="thumbs/th_03.jpg">](03.png) [<img src="thumbs/th_04.jpg">](04.png)
 
-![th_03](thumbs/th_03.jpg) ![th_04](thumbs/th_04.jpg)
+[<img src="thumbs/th_07.jpg">](07.png) [<img src="thumbs/th_08.jpg">](08.png)
 
-![th_07](thumbs/th_07.jpg) ![th_08](thumbs/th_08.jpg)
+[<img src="thumbs/th_09.jpg">](09.png) [<img src="thumbs/th_11.jpg">](11.png)
 
-![th_09](thumbs/th_09.jpg) ![th_11](thumbs/th_11.jpg)
+[<img src="thumbs/th_12.jpg">](12.png) [<img src="thumbs/th_13.jpg">](13.png)
 
-![th_12](thumbs/th_12.jpg) ![th_13](thumbs/th_13.jpg)
+[<img src="thumbs/th_14a.jpg">](14a.png) [<img src="thumbs/th_14b.jpg">](14b.png)
 
-![th_14a](thumbs/th_14a.jpg) ![th_14b](thumbs/th_14b.jpg)
+[<img src="thumbs/th_15.jpg">](15.png) [<img src="thumbs/th_17.jpg">](17.png)
 
-![th_15](thumbs/th_15.jpg) ![th_17](thumbs/th_17.jpg)
+[<img src="thumbs/th_19.jpg">](19.png) [<img src="thumbs/th_27.jpg">](27.png)
 
-![th_19](thumbs/th_19.jpg) ![th_27](thumbs/th_27.jpg)
+[<img src="thumbs/th_29.jpg">](29.png) [<img src="thumbs/th_30.jpg">](30.png)
 
-![th_29](thumbs/th_29.jpg) ![th_30](thumbs/th_30.jpg)
+[<img src="thumbs/th_32.jpg">](32.png) [<img src="thumbs/th_33.jpg">](33.png)
 
-![th_32](thumbs/th_32.jpg) ![th_33](thumbs/th_33.jpg)
+[<img src="thumbs/th_34.jpg">](34.png) [<img src="thumbs/th_35.jpg">](35.png)
 
-![th_34](thumbs/th_34.jpg) ![th_35](thumbs/th_35.jpg)
+[<img src="thumbs/th_36.jpg">](36.png) [<img src="thumbs/th_37.jpg">](37.png)
 
-![th_36](thumbs/th_36.jpg) ![th_37](thumbs/th_37.jpg)
+[<img src="thumbs/th_38.jpg">](38.png) [<img src="thumbs/th_39.jpg">](39.png)
 
-![th_38](thumbs/th_38.jpg) ![th_39](thumbs/th_39.jpg)
+[<img src="thumbs/th_40.jpg">](40.png) [<img src="thumbs/th_41.jpg">](41.png)
 
-![th_40](thumbs/th_40.jpg) ![th_41](thumbs/th_41.jpg)
+[<img src="thumbs/th_42.jpg">](42.png) [<img src="thumbs/th_43.jpg">](43.png)
 
-![th_42](thumbs/th_42.jpg) ![th_43](thumbs/th_43.jpg)
+[<img src="thumbs/th_44.jpg">](44.png) [<img src="thumbs/th_45.jpg">](45.png)
 
-![th_44](thumbs/th_44.jpg) ![th_45](thumbs/th_45.jpg)
+[<img src="thumbs/th_46.jpg">](46.png) [<img src="thumbs/th_49.jpg">](49.png)
 
-![th_46](thumbs/th_46.jpg) ![th_49](thumbs/th_49.jpg)
+[<img src="thumbs/th_50.jpg">](50.png) [<img src="thumbs/th_53.jpg">](53.png)
 
-![th_50](thumbs/th_50.jpg) ![th_53](thumbs/th_53.jpg)
+[<img src="thumbs/th_54a.jpg">](54a.jpg) [<img src="thumbs/th_54b.jpg">](54b.jpg)
 
-![th_54a](thumbs/th_54a.jpg) ![th_54b](thumbs/th_54b.jpg)
+[<img src="thumbs/th_68.jpg">](68.png) [<img src="thumbs/th_69.jpg">](69.png)
 
-![th_68](thumbs/th_68.jpg) ![th_69](thumbs/th_69.jpg)
+[<img src="thumbs/th_70.jpg">](70.png) [<img src="thumbs/th_71.jpg">](71.png)
 
-![th_70](thumbs/th_70.jpg) ![th_71](thumbs/th_71.jpg)
+[<img src="thumbs/th_72.jpg">](72.png) [<img src="thumbs/th_74.jpg">](74.png)
 
-![th_72](thumbs/th_72.jpg) ![th_74](thumbs/th_74.jpg)
+[<img src="thumbs/th_75.jpg">](75.png) [<img src="thumbs/th_76.jpg">](76.png)
 
-![th_75](thumbs/th_75.jpg) ![th_76](thumbs/th_76.jpg)
+[<img src="thumbs/th_77.jpg">](77.png) [<img src="thumbs/th_83.jpg">](83.png)
 
-![th_77](thumbs/th_77.jpg) ![th_83](thumbs/th_83.jpg)
+[<img src="thumbs/th_84.jpg">](84.jpg) [<img src="thumbs/th_85.jpg">](85.jpg)
 
-![th_84](thumbs/th_84.jpg) ![th_85](thumbs/th_85.jpg)
+[<img src="thumbs/th_86.jpg">](86.png) [<img src="thumbs/th_87a.jpg">](87a.png)
 
-![th_86](thumbs/th_86.jpg) ![th_87a](thumbs/th_87a.jpg)
-
-![th_87b](thumbs/th_87b.jpg) ![th_93](thumbs/th_93.jpg)
+[<img src="thumbs/th_87b.jpg">](87b.png) [<img src="thumbs/th_93.jpg">](93.png)
