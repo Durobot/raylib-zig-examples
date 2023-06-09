@@ -21,7 +21,8 @@
 // Download raygui.h from https://github.com/raysan5/raygui/tree/master/src and copy it to this project's folder.
 // Build with `zig build-exe main.zig -idirafter ./ -lc -lraylib`
 
-// WARNING: unless this bug in Zig transtale - https://github.com/ziglang/zig/issues/15408 - has been fixed,
+// WARNING: if you're using old (pre- https://github.com/raysan5/raygui/commit/78ad65365ebae6433f60cf03a09e76b43c46cfa2)
+// version of raygui.h AND unless this bug in Zig transtale - https://github.com/ziglang/zig/issues/15408 - has been fixed,
 // you're going to see errors similar to this:
 
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:27: error: incompatible types: 'c_int' and 'f32'
@@ -91,7 +92,7 @@ pub fn main() void
 
     var start_angle: f32 = 0.0;
     var end_angle: f32 = 360.0;
-    var segments: i32 = 0;
+    var segments: f32 = 0.0;
 
     var draw_ring = true;
     var draw_ring_lines = false;
@@ -117,30 +118,35 @@ pub fn main() void
         c.DrawRectangle(500, 0, c.GetScreenWidth() - 500, c.GetScreenHeight(), c.Fade(c.LIGHTGRAY, 0.3));
 
         if (draw_ring)
-            c.DrawRing(center, inner_radius, outer_radius, start_angle, end_angle, segments, c.Fade(c.MAROON, 0.3));
+            c.DrawRing(center, inner_radius, outer_radius, start_angle, end_angle,
+                       @floatToInt(i32, segments), c.Fade(c.MAROON, 0.3));
         if (draw_ring_lines)
-            c.DrawRingLines(center, inner_radius, outer_radius, start_angle, end_angle, segments, c.Fade(c.BLACK, 0.4));
+            c.DrawRingLines(center, inner_radius, outer_radius, start_angle, end_angle,
+                            @floatToInt(i32, segments), c.Fade(c.BLACK, 0.4));
         if (draw_circle_lines)
-            c.DrawCircleSectorLines(center, outer_radius, start_angle, end_angle, segments, c.Fade(c.BLACK, 0.4));
+            c.DrawCircleSectorLines(center, outer_radius, start_angle, end_angle,
+                                    @floatToInt(i32, segments), c.Fade(c.BLACK, 0.4));
 
         // Draw GUI controls
         //------------------------------------------------------------------------------
-        start_angle = c.GuiSliderBar(.{ .x = 600, .y = 40, .width = 120, .height = 20 }, "StartAngle", null, start_angle, -450, 450);
-        end_angle = c.GuiSliderBar(.{ .x = 600.0, .y = 70.0, .width = 120.0, .height = 20.0 }, "EndAngle", null, end_angle, -450, 450);
+        _ = c.GuiSliderBar(.{ .x = 600, .y = 40, .width = 120, .height = 20 }, "StartAngle", null, &start_angle, -450, 450);
+        _ = c.GuiSliderBar(.{ .x = 600.0, .y = 70.0, .width = 120.0, .height = 20.0 }, "EndAngle", null, &end_angle, -450, 450);
 
-        inner_radius = c.GuiSliderBar(.{ .x = 600.0, .y = 140.0, .width = 120.0, .height = 20.0 }, "InnerRadius", null, inner_radius, 0, 100);
-        outer_radius = c.GuiSliderBar(.{ .x = 600.0, .y = 170.0 , .width = 120.0, .height = 20.0 }, "OuterRadius", null, outer_radius, 0, 200);
+        _ = c.GuiSliderBar(.{ .x = 600.0, .y = 140.0, .width = 120.0, .height = 20.0 }, "InnerRadius", null, &inner_radius, 0, 100);
+        _ = c.GuiSliderBar(.{ .x = 600.0, .y = 170.0 , .width = 120.0, .height = 20.0 }, "OuterRadius", null, &outer_radius, 0, 200);
 
-        segments = @floatToInt(i32, c.GuiSliderBar(.{ .x = 600.0, .y = 240.0, .width = 120.0, .height = 20.0 }, "Segments", null, @intToFloat(f32, segments), 0, 100));
+        _ = c.GuiSliderBar(.{ .x = 600.0, .y = 240.0, .width = 120.0, .height = 20.0 },
+                           "Segments", null, &segments, 0, 100);
 
-        draw_ring = c.GuiCheckBox(.{ .x = 600, .y = 320, .width = 20, .height = 20 }, "Draw Ring", draw_ring);
-        draw_ring_lines = c.GuiCheckBox(.{ .x = 600, .y = 350, .width = 20, .height = 20 }, "Draw RingLines", draw_ring_lines);
-        draw_circle_lines = c.GuiCheckBox(.{ .x = 600, .y = 380, .width = 20, .height = 20 }, "Draw CircleLines", draw_circle_lines);
+        _ = c.GuiCheckBox(.{ .x = 600, .y = 320, .width = 20, .height = 20 }, "Draw Ring", &draw_ring);
+        _ = c.GuiCheckBox(.{ .x = 600, .y = 350, .width = 20, .height = 20 }, "Draw RingLines", &draw_ring_lines);
+        _ = c.GuiCheckBox(.{ .x = 600, .y = 380, .width = 20, .height = 20 }, "Draw CircleLines", &draw_circle_lines);
         //------------------------------------------------------------------------------
 
         var min_segments: i32 = @floatToInt(i32, @ceil((end_angle - start_angle) / 90.0));
-        c.DrawText(c.TextFormat("MODE: %s", @ptrCast([*c]const u8, if (segments >= min_segments) "MANUAL" else "AUTO")),
-                   600, 270, 10, if (segments >= min_segments) c.MAROON else c.DARKGRAY);
+        c.DrawText(c.TextFormat("MODE: %s", @ptrCast([*c]const u8,
+                                            if (@floatToInt(i32, segments) >= min_segments) "MANUAL" else "AUTO")),
+                   600, 270, 10, if (@floatToInt(i32, segments) >= min_segments) c.MAROON else c.DARKGRAY);
 
         c.DrawFPS(10, 10);
         //---------------------------------------------------------------------------------
