@@ -84,10 +84,10 @@ pub fn main() void
     defer c.CloseWindow(); // Close window and OpenGL context
 
     var roundness: f32 = 0.2;
-    var width: i32 = 200;
-    var height: i32 = 100;
-    var segments: i32 = 0;
-    var line_thick: i32 = 1;
+    var width: f32 = 200.0;
+    var height: f32 = 100.0;
+    var segments: f32 = 0.0;
+    var line_thick: f32 = 1.0;
 
     var draw_rect = false;
     var draw_rounded_rect = true;
@@ -99,10 +99,10 @@ pub fn main() void
     {
         // Update
         //----------------------------------------------------------------------------------
-        const rec = c.Rectangle{ .x = @intToFloat(f32, c.GetScreenWidth() - width - 250) / 2.0,
-                                 .y = @intToFloat(f32, c.GetScreenHeight() - height) / 2.0,
-                                 .width = @intToFloat(f32, width),
-                                 .height = @intToFloat(f32, height) };
+        const rec = c.Rectangle{ .x = @intToFloat(f32, c.GetScreenWidth() - @floatToInt(c_int, width) - 250) / 2.0,
+                                 .y = @intToFloat(f32, c.GetScreenHeight() - @floatToInt(c_int, height)) / 2.0,
+                                 .width = width,
+                                 .height = height };
         //----------------------------------------------------------------------------------
 
         // Draw
@@ -116,26 +116,28 @@ pub fn main() void
         c.DrawRectangle(560, 0, c.GetScreenWidth() - 500, c.GetScreenHeight(), c.Fade(c.LIGHTGRAY, 0.3));
 
         if (draw_rect) c.DrawRectangleRec(rec, c.Fade(c.GOLD, 0.6));
-        if (draw_rounded_rect) c.DrawRectangleRounded(rec, roundness, segments, c.Fade(c.MAROON, 0.2));
-        if (draw_rounded_lines) c.DrawRectangleRoundedLines(rec,roundness, segments, @intToFloat(f32, line_thick), c.Fade(c.MAROON, 0.4));
+        if (draw_rounded_rect) c.DrawRectangleRounded(rec, roundness, @floatToInt(c_int, segments), c.Fade(c.MAROON, 0.2));
+        if (draw_rounded_lines) c.DrawRectangleRoundedLines(rec, roundness, @floatToInt(c_int, segments), line_thick, c.Fade(c.MAROON, 0.4));
 
         // Draw GUI controls
         //------------------------------------------------------------------------------
-        width = @floatToInt(i32, c.GuiSliderBar(.{ .x = 640.0, .y = 40.0, .width = 105.0, .height = 20.0 }, "Width", null,
-                                                @intToFloat(f32, width), 0.0, @intToFloat(f32, c.GetScreenWidth()) - 300.0));
-        height = @floatToInt(i32, c.GuiSliderBar(.{ .x = 640.0, .y = 70.0, .width = 105.0, .height = 20.0 }, "Height", null,
-                                                 @intToFloat(f32, height), 0.0, @intToFloat(f32, c.GetScreenHeight()) - 50.0));
-        roundness = c.GuiSliderBar(.{ .x = 640.0, .y = 140.0, .width = 105.0, .height = 20.0 }, "Roundness", null, roundness, 0.0, 1.0);
-        line_thick = @floatToInt(i32, c.GuiSliderBar(.{ .x = 640.0, .y = 170.0, .width = 105.0, .height = 20.0 }, "Thickness", null,
-                                                    @intToFloat(f32, line_thick), 0.0, 20.0));
-        segments = @floatToInt(i32, c.GuiSliderBar(.{ .x = 640.0, .y = 240.0, .width = 105.0, .height = 20.0 }, "Segments", null,
-                                                   @intToFloat(f32, segments), 0.0, 60.0));
+        _ = c.GuiSliderBar(.{ .x = 640.0, .y = 40.0, .width = 105.0, .height = 20.0 }, "Width", null,
+                           &width, 0.0, @intToFloat(f32, c.GetScreenWidth()) - 300.0);
+        _ = c.GuiSliderBar(.{ .x = 640.0, .y = 70.0, .width = 105.0, .height = 20.0 }, "Height", null,
+                           &height, 0.0, @intToFloat(f32, c.GetScreenHeight()) - 50.0);
+        _ = c.GuiSliderBar(.{ .x = 640.0, .y = 140.0, .width = 105.0, .height = 20.0 }, "Roundness", null,
+                           &roundness, 0.0, 1.0);
+        _ = c.GuiSliderBar(.{ .x = 640.0, .y = 170.0, .width = 105.0, .height = 20.0 }, "Thickness", null,
+                           &line_thick, 0.0, 20.0);
+        _ = c.GuiSliderBar(.{ .x = 640.0, .y = 240.0, .width = 105.0, .height = 20.0 }, "Segments", null,
+                           &segments, 0.0, 60.0);
 
-        draw_rounded_rect = c.GuiCheckBox(.{ .x = 640.0, .y = 320.0, .width = 20.0, .height = 20.0 }, "DrawRoundedRect",
-                                          draw_rounded_rect);
-        draw_rounded_lines = c.GuiCheckBox(.{ .x = 640.0, .y = 350.0, .width = 20.0, .height = 20.0 }, "DrawRoundedLines",
-                                           draw_rounded_lines);
-        draw_rect = c.GuiCheckBox(.{ .x = 640.0, .y = 380.0, .width = 20.0, .height = 20.0 }, "DrawRect", draw_rect);
+        _ = c.GuiCheckBox(.{ .x = 640.0, .y = 320.0, .width = 20.0, .height = 20.0 }, "DrawRoundedRect",
+                          &draw_rounded_rect);
+        _ = c.GuiCheckBox(.{ .x = 640.0, .y = 350.0, .width = 20.0, .height = 20.0 }, "DrawRoundedLines",
+                          &draw_rounded_lines);
+        _ = c.GuiCheckBox(.{ .x = 640.0, .y = 380.0, .width = 20.0, .height = 20.0 }, "DrawRect",
+                          &draw_rect);
         //------------------------------------------------------------------------------
 
         c.DrawText(c.TextFormat("MODE: %s", @ptrCast([*c]const u8, if (segments >= 4) "MANUAL" else "AUTO")), 640, 280, 10,
