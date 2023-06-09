@@ -88,7 +88,7 @@ pub fn main() void
     var outer_radius: f32 = 180.0;
     var start_angle: f32 = 0.0;
     var end_angle: f32 = 180.0;
-    var segments: i32 = 0;
+    var segments: f32 = 0.0;
     var min_segments: i32 = 4;
 
     c.SetTargetFPS(60);
@@ -110,25 +110,26 @@ pub fn main() void
         c.DrawLine(500, 0, 500, c.GetScreenHeight(), c.Fade(c.LIGHTGRAY, 0.6));
         c.DrawRectangle(500, 0, c.GetScreenWidth() - 500, c.GetScreenHeight(), c.Fade(c.LIGHTGRAY, 0.3));
 
-        c.DrawCircleSector(center, outer_radius, start_angle, end_angle, segments, c.Fade(c.MAROON, 0.3));
-        c.DrawCircleSectorLines(center, outer_radius, start_angle, end_angle, segments, c.Fade(c.MAROON, 0.6));
+        c.DrawCircleSector(center, outer_radius, start_angle, end_angle, @floatToInt(c_int, segments), c.Fade(c.MAROON, 0.3));
+        c.DrawCircleSectorLines(center, outer_radius, start_angle, end_angle, @floatToInt(c_int, segments), c.Fade(c.MAROON, 0.6));
 
         // Draw GUI controls
         //------------------------------------------------------------------------------
-        start_angle = c.GuiSliderBar(.{ .x = 600.0, .y = 40.0, .width = 120.0, .height = 20.0 },
-                                     "StartAngle", null, start_angle, 0.0, 720.0);
-        end_angle = c.GuiSliderBar(.{ .x = 600.0, .y = 70.0, .width = 120.0, .height = 20.0 },
-                                   "EndAngle", null, end_angle, 0.0, 720.0);
+        _ = c.GuiSliderBar(.{ .x = 600.0, .y = 40.0, .width = 120.0, .height = 20.0 },
+                           "StartAngle", null, &start_angle, 0.0, 720.0);
+        _ = c.GuiSliderBar(.{ .x = 600.0, .y = 70.0, .width = 120.0, .height = 20.0 },
+                           "EndAngle", null, &end_angle, 0.0, 720.0);
 
-        outer_radius = c.GuiSliderBar(.{ .x = 600.0, .y = 140.0, .width = 120.0, .height = 20.0 },
-                                      "Radius", null, outer_radius, 0.0, 200.0);
-        segments = @floatToInt(i32, c.GuiSliderBar(.{ .x = 600.0, .y = 170.0, .width = 120.0, .height = 20.0 },
-                                                   "Segments", null, @intToFloat(f32, segments), 0.0, 100.0));
+        _ = c.GuiSliderBar(.{ .x = 600.0, .y = 140.0, .width = 120.0, .height = 20.0 },
+                           "Radius", null, &outer_radius, 0.0, 200.0);
+        _ = c.GuiSliderBar(.{ .x = 600.0, .y = 170.0, .width = 120.0, .height = 20.0 },
+                           "Segments", null, &segments, 0.0, 100.0);
         //------------------------------------------------------------------------------
 
         min_segments = @floatToInt(i32, @ceil((end_angle - start_angle) / 90.0));
-        c.DrawText(c.TextFormat("MODE: %s", @ptrCast([*c]const u8, if (segments >= min_segments) "MANUAL" else "AUTO")),
-                   600, 200, 10, if (segments >= min_segments) c.MAROON else c.DARKGRAY);
+        c.DrawText(c.TextFormat("MODE: %s",
+                                @ptrCast([*c]const u8, if (@floatToInt(i32, segments) >= min_segments) "MANUAL" else "AUTO")),
+                   600, 200, 10, if (@floatToInt(i32, segments) >= min_segments) c.MAROON else c.DARKGRAY);
         c.DrawFPS(10, 10);
         //---------------------------------------------------------------------------------
     }
