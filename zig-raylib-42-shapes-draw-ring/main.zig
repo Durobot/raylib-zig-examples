@@ -119,13 +119,13 @@ pub fn main() void
 
         if (draw_ring)
             c.DrawRing(center, inner_radius, outer_radius, start_angle, end_angle,
-                       @floatToInt(i32, segments), c.Fade(c.MAROON, 0.3));
+                       @floatToInt(c_int, segments), c.Fade(c.MAROON, 0.3));
         if (draw_ring_lines)
             c.DrawRingLines(center, inner_radius, outer_radius, start_angle, end_angle,
-                            @floatToInt(i32, segments), c.Fade(c.BLACK, 0.4));
+                            @floatToInt(c_int, segments), c.Fade(c.BLACK, 0.4));
         if (draw_circle_lines)
             c.DrawCircleSectorLines(center, outer_radius, start_angle, end_angle,
-                                    @floatToInt(i32, segments), c.Fade(c.BLACK, 0.4));
+                                    @floatToInt(c_int, segments), c.Fade(c.BLACK, 0.4));
 
         // Draw GUI controls
         //------------------------------------------------------------------------------
