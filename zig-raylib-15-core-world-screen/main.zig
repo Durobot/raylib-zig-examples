@@ -71,10 +71,10 @@ pub fn main() void
             c.DrawGrid(10, 1.0);
         }
         c.DrawText("Enemy: 100 / 100",
-                   @floatToInt(c_int, cube_scr_pos.x) - @divTrunc(c.MeasureText("Enemy: 100/100", 20), 2),
-                   @floatToInt(c_int, cube_scr_pos.y), 20, c.BLACK);
+                   @intFromFloat(c_int, cube_scr_pos.x) - @divTrunc(c.MeasureText("Enemy: 100/100", 20), 2),
+                   @intFromFloat(c_int, cube_scr_pos.y), 20, c.BLACK);
         c.DrawText(c.TextFormat("Cube position in screen space coordinates: [%i, %i]",
-                                @floatToInt(c_int, cube_scr_pos.x), @floatToInt(c_int, cube_scr_pos.y)),
+                                @intFromFloat(c_int, cube_scr_pos.x), @intFromFloat(c_int, cube_scr_pos.y)),
                    10, 10, 20, c.LIME);
         c.DrawText("Text 2d should be always on top of the cube", 10, 40, 20, c.GRAY);
         c.DrawFPS(screen_width - 100, 10);

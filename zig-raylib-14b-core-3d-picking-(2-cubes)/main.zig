@@ -189,7 +189,7 @@ pub fn main() void
             const fmt_text = c.TextFormat("BOX %03i SELECTED", box_idx);
             c.DrawText(fmt_text,
                 @divTrunc(screen_width - c.MeasureText(fmt_text, 30), 2),
-                @floatToInt(c_int, screen_height * 0.1), 30, c.GREEN);
+                @intFromFloat(c_int, screen_height * 0.1), 30, c.GREEN);
         }
 
         c.DrawText("Press A or D to orbit the camera, mouse wheel to dolly, P or Numpad 5 to switch projection modes", 10, 430, 10, c.GRAY);

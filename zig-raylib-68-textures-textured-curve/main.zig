@@ -114,7 +114,7 @@ fn DrawCurve() void
 
 fn DrawTexturedCurve() void
 {
-    const step = 1.0 / @intToFloat(f32, curve_segments);
+    const step = 1.0 / @floatFromInt(f32, curve_segments);
 
     var previous = curve_start_pos;
     var previous_tangent = c.Vector2{ .x = 0.0, .y = 0.0 };
@@ -129,7 +129,7 @@ fn DrawTexturedCurve() void
     for (1..curve_segments + 1) |i|
     {
         // Segment the curve
-        t = step * @intToFloat(f32, i);
+        t = step * @floatFromInt(f32, i);
         const one_minus_t = 1.0 - t;
         const a = std.math.pow(f32, one_minus_t, 3.0);
         const b = 3.0 * std.math.pow(f32, one_minus_t, 2.0) * t;

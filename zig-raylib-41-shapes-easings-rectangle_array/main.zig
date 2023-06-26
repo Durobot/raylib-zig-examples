@@ -56,8 +56,8 @@ pub fn main() void
         {
             for (0..max_recs_x) |x|
             {
-                init_rec[y * max_recs_x + x].x = recs_width / 2.0 + @intToFloat(comptime_float, recs_width * x);
-                init_rec[y * max_recs_x + x].y = recs_height / 2.0 + @intToFloat(comptime_float, recs_height * y);
+                init_rec[y * max_recs_x + x].x = recs_width / 2.0 + @floatFromInt(comptime_float, recs_width * x);
+                init_rec[y * max_recs_x + x].y = recs_height / 2.0 + @floatFromInt(comptime_float, recs_height * y);
                 init_rec[y * max_recs_x + x].width = recs_width;
                 init_rec[y * max_recs_x + x].height = recs_height;
             }
@@ -81,15 +81,15 @@ pub fn main() void
 
             for (0..max_recs_x * max_recs_y) |i|
             {
-                recs[i].height = c.EaseCircOut(@intToFloat(f32, frames_counter), recs_height, -recs_height, play_time_in_frames);
-                recs[i].width = c.EaseCircOut(@intToFloat(f32, frames_counter), recs_width, -recs_width, play_time_in_frames);
+                recs[i].height = c.EaseCircOut(@floatFromInt(f32, frames_counter), recs_height, -recs_height, play_time_in_frames);
+                recs[i].width = c.EaseCircOut(@floatFromInt(f32, frames_counter), recs_width, -recs_width, play_time_in_frames);
 
                 if (recs[i].height < 0) recs[i].height = 0.0;
                 if (recs[i].width < 0) recs[i].width = 0.0;
 
                 if ((recs[i].height == 0) and (recs[i].width == 0)) state = 1; // Finish playing
 
-                rotation = c.EaseLinearIn(@intToFloat(f32, frames_counter), 0.0, 360.0, play_time_in_frames);
+                rotation = c.EaseLinearIn(@floatFromInt(f32, frames_counter), 0.0, 360.0, play_time_in_frames);
             }
         }
         else if ((state == 1) and c.IsKeyPressed(c.KEY_SPACE))

@@ -71,11 +71,11 @@ pub fn main() void
 
     for (&positions, fonts, messages, spacings, 0..) |*pos, font, msg, spacing, i|
     {
-        pos.x = @intToFloat(f32, screen_width) / 2.0 -
+        pos.x = @floatFromInt(f32, screen_width) / 2.0 -
                 c.MeasureTextEx(font, msg,
-                                @intToFloat(f32, font.baseSize) * 2.0,
-                                @intToFloat(f32, spacing)).x / 2.0;
-        pos.y = 60.0 + @intToFloat(f32, font.baseSize) + 45.0 * @intToFloat(f32, i);
+                                @floatFromInt(f32, font.baseSize) * 2.0,
+                                @floatFromInt(f32, spacing)).x / 2.0;
+        pos.y = 60.0 + @floatFromInt(f32, font.baseSize) + 45.0 * @floatFromInt(f32, i);
     }
 
     // Small Y position corrections
@@ -104,7 +104,7 @@ pub fn main() void
         c.DrawLine(220, 50, 590, 50, c.DARKGRAY);
 
         for (positions, fonts, messages, spacings, colors) |pos, font, msg, spacing, color|
-            c.DrawTextEx(font, msg, pos, @intToFloat(f32, font.baseSize) * 2.0, @intToFloat(f32, spacing), color);
+            c.DrawTextEx(font, msg, pos, @floatFromInt(f32, font.baseSize) * 2.0, @floatFromInt(f32, spacing), color);
         //---------------------------------------------------------------------------------
     }
 }

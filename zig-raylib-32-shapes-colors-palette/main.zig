@@ -53,8 +53,8 @@ pub fn main() void
         var rects: [max_colors_count]c.Rectangle = undefined;
         for (0..max_colors_count) |i|
         {
-            rects[i].x = 20.0 + 100.0 * @intToFloat(comptime_float, i % 7) + 10.0 * @intToFloat(comptime_float, i % 7);
-            rects[i].y = 80.0 + 100.0 * @intToFloat(comptime_float, i / 7) + 10.0 * @intToFloat(comptime_float, i / 7);
+            rects[i].x = 20.0 + 100.0 * @floatFromInt(comptime_float, i % 7) + 10.0 * @floatFromInt(comptime_float, i % 7);
+            rects[i].y = 80.0 + 100.0 * @floatFromInt(comptime_float, i / 7) + 10.0 * @floatFromInt(comptime_float, i / 7);
             rects[i].width = 100.0;
             rects[i].height = 100.0;
         }
@@ -94,13 +94,13 @@ pub fn main() void
 
             if (c.IsKeyDown(c.KEY_SPACE) or clr_states[i] != 0)
             {
-                c.DrawRectangle(@floatToInt(c_int, clr_rects[i].x),
-                                @floatToInt(c_int, clr_rects[i].y + clr_rects[i].height) - 26,
-                                @floatToInt(c_int, clr_rects[i].width), 20, c.BLACK);
+                c.DrawRectangle(@intFromFloat(c_int, clr_rects[i].x),
+                                @intFromFloat(c_int, clr_rects[i].y + clr_rects[i].height) - 26,
+                                @intFromFloat(c_int, clr_rects[i].width), 20, c.BLACK);
                 c.DrawRectangleLinesEx(clr_rects[i], 6, c.Fade(c.BLACK, 0.3));
                 c.DrawText(clr_names[i],
-                           @floatToInt(c_int, clr_rects[i].x + clr_rects[i].width) - c.MeasureText(clr_names[i], 10) - 12,
-                           @floatToInt(c_int, clr_rects[i].y + clr_rects[i].height) - 20, 10, clrs[i]);
+                           @intFromFloat(c_int, clr_rects[i].x + clr_rects[i].width) - c.MeasureText(clr_names[i], 10) - 12,
+                           @intFromFloat(c_int, clr_rects[i].y + clr_rects[i].height) - 20, 10, clrs[i]);
             }
         }
         //---------------------------------------------------------------------------------
@@ -112,8 +112,8 @@ pub fn main() void
 //    var rects: [siz]c.Rectangle = undefined;
 //    inline for (0..siz) |i|
 //    {
-//        rects[i].x = 20.0 + 100.0 * @intToFloat(comptime_float, i % 7) + 10.0 * @intToFloat(comptime_float, i % 7);
-//        rects[i].y = 80.0 + 100.0 * (@intToFloat(comptime_float, i) / 7.0) + 10.0 * (@intToFloat(comptime_float, i) / 7.0);
+//        rects[i].x = 20.0 + 100.0 * @floatFromInt(comptime_float, i % 7) + 10.0 * @floatFromInt(comptime_float, i % 7);
+//        rects[i].y = 80.0 + 100.0 * (@floatFromInt(comptime_float, i) / 7.0) + 10.0 * (@floatFromInt(comptime_float, i) / 7.0);
 //        rects[i].width = 100.0;
 //        rects[i].height = 100.0;
 //    }

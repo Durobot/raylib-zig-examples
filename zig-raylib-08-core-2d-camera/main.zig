@@ -44,13 +44,13 @@ pub fn main() void
         var spacing: i32 = 0;
         for (0..max_buildings) |i|
         {
-            buildings[i].width = @intToFloat(f32, c.GetRandomValue(50, 200));
-            buildings[i].height = @intToFloat(f32, c.GetRandomValue(100, 800));
+            buildings[i].width = @floatFromInt(f32, c.GetRandomValue(50, 200));
+            buildings[i].height = @floatFromInt(f32, c.GetRandomValue(100, 800));
 
             buildings[i].y = screen_height - 130.0 - buildings[i].height;
-            buildings[i].x = -6000.0 + @intToFloat(f32, spacing);
+            buildings[i].x = -6000.0 + @floatFromInt(f32, spacing);
 
-            spacing += @floatToInt(i32, buildings[i].width);
+            spacing += @intFromFloat(i32, buildings[i].width);
 
             build_colors[i] = c.Color
             {
@@ -137,10 +137,10 @@ pub fn main() void
                 // Player character box
                 c.DrawRectangleRec(player, c.RED);
 
-                c.DrawLine(@floatToInt(c_int, camera.target.x), -screen_height*10,
-                           @floatToInt(c_int, camera.target.x), screen_height*10, c.GREEN);
-                c.DrawLine(-screen_width*10, @floatToInt(c_int, camera.target.y),
-                           screen_width*10, @floatToInt(c_int, camera.target.y), c.GREEN);
+                c.DrawLine(@intFromFloat(c_int, camera.target.x), -screen_height*10,
+                           @intFromFloat(c_int, camera.target.x), screen_height*10, c.GREEN);
+                c.DrawLine(-screen_width*10, @intFromFloat(c_int, camera.target.y),
+                           screen_width*10, @intFromFloat(c_int, camera.target.y), c.GREEN);
             }
 
             c.DrawText("SCREEN AREA", 640, 10, 20, c.RED);

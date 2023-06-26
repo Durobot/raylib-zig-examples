@@ -60,8 +60,8 @@ pub fn main() void
     const split_screen_rect = c.Rectangle
     {
         .x = 0.0, .y = 0.0,
-        .width = @intToFloat(f32, screen_player1.texture.width),
-        .height = @intToFloat(f32, -screen_player2.texture.height)
+        .width = @floatFromInt(f32, screen_player1.texture.width),
+        .height = @floatFromInt(f32, -screen_player2.texture.height)
     };
 
     c.SetTargetFPS(60);
@@ -129,7 +129,7 @@ pub fn main() void
         c.DrawTextureRec(screen_player1.texture, split_screen_rect,
                          .{ .x = 0.0, .y = 0.0 }, c.WHITE);
         c.DrawTextureRec(screen_player2.texture, split_screen_rect,
-                         .{ .x = @intToFloat(f32, screen_width) / 2.0, .y = 0 }, c.WHITE);
+                         .{ .x = @floatFromInt(f32, screen_width) / 2.0, .y = 0 }, c.WHITE);
         c.DrawFPS(10, 30);
         //---------------------------------------------------------------------------------
     }

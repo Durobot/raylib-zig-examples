@@ -55,8 +55,8 @@ pub fn main() void
     //while (i < max_columns) : (i += 1)
     for (0..max_columns) |i|
     {
-        heights[i] = @intToFloat(f32, c.GetRandomValue(1, 12));
-        positions[i] = .{ .x = @intToFloat(f32, c.GetRandomValue(-15, 15)), .y = heights[i]/2.0, .z = @intToFloat(f32, c.GetRandomValue(-15, 15)) };
+        heights[i] = @floatFromInt(f32, c.GetRandomValue(1, 12));
+        positions[i] = .{ .x = @floatFromInt(f32, c.GetRandomValue(-15, 15)), .y = heights[i]/2.0, .z = @floatFromInt(f32, c.GetRandomValue(-15, 15)) };
         colors[i] = .{ .r = @intCast(u8, c.GetRandomValue(20, 255)), .g = @intCast(u8, c.GetRandomValue(10, 55)), .b = 30, .a = 255 };
     }
 

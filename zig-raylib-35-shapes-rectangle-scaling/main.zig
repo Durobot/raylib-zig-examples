@@ -75,10 +75,10 @@ pub fn main() void
                 rec.height = mouse_scale_mark_size;
 
             // Check maximum rec size
-            if (rec.width > (@intToFloat(f32, c.GetScreenWidth()) - rec.x))
-                rec.width = @intToFloat(f32, c.GetScreenWidth()) - rec.x;
-            if (rec.height > (@intToFloat(f32, c.GetScreenHeight()) - rec.y))
-                rec.height = @intToFloat(f32, c.GetScreenHeight()) - rec.y;
+            if (rec.width > (@floatFromInt(f32, c.GetScreenWidth()) - rec.x))
+                rec.width = @floatFromInt(f32, c.GetScreenWidth()) - rec.x;
+            if (rec.height > (@floatFromInt(f32, c.GetScreenHeight()) - rec.y))
+                rec.height = @floatFromInt(f32, c.GetScreenHeight()) - rec.y;
 
             if (c.IsMouseButtonReleased(c.MOUSE_BUTTON_LEFT))
                 mouse_scale_mode = false;

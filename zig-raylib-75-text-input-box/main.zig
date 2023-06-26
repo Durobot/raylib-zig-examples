@@ -108,16 +108,16 @@ pub fn main() void
         c.DrawRectangleRec(text_box, c.LIGHTGRAY);
         if (mouse_on_text)
         {
-            c.DrawRectangleLines(@floatToInt(c_int, text_box.x), @floatToInt(c_int, text_box.y),
-                                 @floatToInt(c_int, text_box.width), @floatToInt(c_int, text_box.height),
+            c.DrawRectangleLines(@intFromFloat(c_int, text_box.x), @intFromFloat(c_int, text_box.y),
+                                 @intFromFloat(c_int, text_box.width), @intFromFloat(c_int, text_box.height),
                                  c.RED);
         }
         else
-            c.DrawRectangleLines(@floatToInt(c_int, text_box.x), @floatToInt(c_int, text_box.y),
-                                 @floatToInt(c_int, text_box.width), @floatToInt(c_int, text_box.height),
+            c.DrawRectangleLines(@intFromFloat(c_int, text_box.x), @intFromFloat(c_int, text_box.y),
+                                 @intFromFloat(c_int, text_box.width), @intFromFloat(c_int, text_box.height),
                                  c.DARKGRAY);
 
-        c.DrawText(&name, @floatToInt(c_int, text_box.x) + 5, @floatToInt(c_int, text_box.y) + 8, 40, c.MAROON);
+        c.DrawText(&name, @intFromFloat(c_int, text_box.x) + 5, @intFromFloat(c_int, text_box.y) + 8, 40, c.MAROON);
 
         c.DrawText(c.TextFormat("INPUT CHARS: %i/%i", letter_count, @as(i32, max_input_chars)), 315, 250, 20, c.DARKGRAY);
 
@@ -127,8 +127,8 @@ pub fn main() void
             {
                 // Draw blinking underscore char
                 if (((frames_counter/20)%2) == 0)
-                    c.DrawText("_", @floatToInt(c_int, text_box.x) + 8 + c.MeasureText(&name, 40),
-                               @floatToInt(c_int, text_box.y) + 12, 40, c.MAROON);
+                    c.DrawText("_", @intFromFloat(c_int, text_box.x) + 8 + c.MeasureText(&name, 40),
+                               @intFromFloat(c_int, text_box.y) + 12, 40, c.MAROON);
             }
             else
                 c.DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, c.GRAY);

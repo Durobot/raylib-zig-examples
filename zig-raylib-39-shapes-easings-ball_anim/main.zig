@@ -53,7 +53,7 @@ pub fn main() void
         if (state == 0)             // Move ball position X with easing
         {
             frames_counter += 1;
-            ball_pos_x = @floatToInt(i32, c.EaseElasticOut(@intToFloat(f32, frames_counter), -100, screen_width/2.0 + 100, 120));
+            ball_pos_x = @intFromFloat(i32, c.EaseElasticOut(@floatFromInt(f32, frames_counter), -100, screen_width/2.0 + 100, 120));
 
             if (frames_counter >= 120)
             {
@@ -64,7 +64,7 @@ pub fn main() void
         else if (state == 1)        // Increase ball radius with easing
         {
             frames_counter += 1;
-            ball_radius = @floatToInt(i32, c.EaseElasticIn(@intToFloat(f32, frames_counter), 20, 500, 200));
+            ball_radius = @intFromFloat(i32, c.EaseElasticIn(@floatFromInt(f32, frames_counter), 20, 500, 200));
 
             if (frames_counter >= 200)
             {
@@ -75,7 +75,7 @@ pub fn main() void
         else if (state == 2)        // Change ball alpha with easing (background color blending)
         {
             frames_counter += 1;
-            ball_alpha = c.EaseCubicOut(@intToFloat(f32, frames_counter), 0.0, 1.0, 200);
+            ball_alpha = c.EaseCubicOut(@floatFromInt(f32, frames_counter), 0.0, 1.0, 200);
 
             if (frames_counter >= 200)
             {
@@ -107,7 +107,7 @@ pub fn main() void
 
         if (state >= 2)
             c.DrawRectangle(0, 0, screen_width, screen_height, c.GREEN);
-        c.DrawCircle(ball_pos_x, 200, @intToFloat(f32, ball_radius), c.Fade(c.RED, 1.0 - ball_alpha));
+        c.DrawCircle(ball_pos_x, 200, @floatFromInt(f32, ball_radius), c.Fade(c.RED, 1.0 - ball_alpha));
 
         if (state == 3)
             c.DrawText("PRESS [ENTER] TO PLAY AGAIN!", 240, 200, 20, c.BLACK);

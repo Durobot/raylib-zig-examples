@@ -32,16 +32,16 @@ pub fn main() void
     c.InitWindow(screen_width, screen_height, "raylib [shapes] example - following eyes");
     defer c.CloseWindow(); // Close window and OpenGL context
 
-    const sclera_left_pos = c.Vector2{ .x = @intToFloat(f32, c.GetScreenWidth()) / 2.0 - 100.0,
-                                       .y = @intToFloat(f32, c.GetScreenHeight()) / 2.0 };
-    const sclera_right_pos = c.Vector2{ .x = @intToFloat(f32, c.GetScreenWidth()) / 2.0 + 100.0,
-                                        .y = @intToFloat(f32, c.GetScreenHeight()) / 2.0 };
+    const sclera_left_pos = c.Vector2{ .x = @floatFromInt(f32, c.GetScreenWidth()) / 2.0 - 100.0,
+                                       .y = @floatFromInt(f32, c.GetScreenHeight()) / 2.0 };
+    const sclera_right_pos = c.Vector2{ .x = @floatFromInt(f32, c.GetScreenWidth()) / 2.0 + 100.0,
+                                        .y = @floatFromInt(f32, c.GetScreenHeight()) / 2.0 };
     const sclera_radius = 80.0;
 
-    var iris_left_pos = c.Vector2{ .x = @intToFloat(f32, c.GetScreenWidth()) / 2.0 - 100.0,
-                                   .y = @intToFloat(f32, c.GetScreenHeight()) / 2.0 };
-    var iris_right_pos = c.Vector2{ .x = @intToFloat(f32, c.GetScreenWidth()) / 2.0 + 100.0,
-                                    .y = @intToFloat(f32, c.GetScreenHeight()) / 2.0 };
+    var iris_left_pos = c.Vector2{ .x = @floatFromInt(f32, c.GetScreenWidth()) / 2.0 - 100.0,
+                                   .y = @floatFromInt(f32, c.GetScreenHeight()) / 2.0 };
+    var iris_right_pos = c.Vector2{ .x = @floatFromInt(f32, c.GetScreenWidth()) / 2.0 + 100.0,
+                                    .y = @floatFromInt(f32, c.GetScreenHeight()) / 2.0 };
     const iris_radius = 24.0;
 
     var angle: f32 = 0.0;

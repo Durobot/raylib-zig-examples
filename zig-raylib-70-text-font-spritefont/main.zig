@@ -58,16 +58,16 @@ pub fn main() void
     }
 
     const font_pos1 = c.Vector2{ .x = screen_width / 2.0 -
-                                  c.MeasureTextEx(font1, msg1, @intToFloat(f32, font1.baseSize), -3).x / 2.0,
-                                 .y = screen_height / 2.0 - @intToFloat(f32, font1.baseSize) / 2.0 - 80.0 };
+                                  c.MeasureTextEx(font1, msg1, @floatFromInt(f32, font1.baseSize), -3).x / 2.0,
+                                 .y = screen_height / 2.0 - @floatFromInt(f32, font1.baseSize) / 2.0 - 80.0 };
 
     const font_pos2 = c.Vector2{ .x = screen_width / 2.0 -
-                                  c.MeasureTextEx(font2, msg2, @intToFloat(f32, font2.baseSize), -2.0).x / 2.0,
-                                 .y = screen_height / 2.0 - @intToFloat(f32, font2.baseSize) / 2.0 - 10.0 };
+                                  c.MeasureTextEx(font2, msg2, @floatFromInt(f32, font2.baseSize), -2.0).x / 2.0,
+                                 .y = screen_height / 2.0 - @floatFromInt(f32, font2.baseSize) / 2.0 - 10.0 };
 
     const font_pos3 = c.Vector2{ .x = screen_width/2.0 -
-                                  c.MeasureTextEx(font3, msg3, @intToFloat(f32, font3.baseSize), 2.0).x / 2.0,
-                                 .y = screen_height/2.0 - @intToFloat(f32, font3.baseSize) / 2.0 + 50.0 };
+                                  c.MeasureTextEx(font3, msg3, @floatFromInt(f32, font3.baseSize), 2.0).x / 2.0,
+                                 .y = screen_height/2.0 - @floatFromInt(f32, font3.baseSize) / 2.0 + 50.0 };
 
     c.SetTargetFPS(60);
 
@@ -84,9 +84,9 @@ pub fn main() void
 
         c.ClearBackground(c.RAYWHITE);
 
-        c.DrawTextEx(font1, msg1, font_pos1, @intToFloat(f32, font1.baseSize), -3, c.WHITE);
-        c.DrawTextEx(font2, msg2, font_pos2, @intToFloat(f32, font2.baseSize), -2, c.WHITE);
-        c.DrawTextEx(font3, msg3, font_pos3, @intToFloat(f32, font3.baseSize), 2, c.WHITE);
+        c.DrawTextEx(font1, msg1, font_pos1, @floatFromInt(f32, font1.baseSize), -3, c.WHITE);
+        c.DrawTextEx(font2, msg2, font_pos2, @floatFromInt(f32, font2.baseSize), -2, c.WHITE);
+        c.DrawTextEx(font3, msg3, font_pos3, @floatFromInt(f32, font3.baseSize), 2, c.WHITE);
         //---------------------------------------------------------------------------------
     }
 }

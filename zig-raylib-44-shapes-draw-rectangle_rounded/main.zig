@@ -25,13 +25,13 @@
 // you're going to see errors similar to this:
 
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:27: error: incompatible types: 'c_int' and 'f32'
-//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @intToFloat(f32, valueRange);
+//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange);
 //                     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:21: note: type 'c_int' here
-//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @intToFloat(f32, valueRange);
+//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange);
 //                     ^~~~~
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:87: note: type 'f32' here
-//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @intToFloat(f32, valueRange);
+//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange);
 //                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Zig incorrectly skips type coercion when translating certain C code in raygui.h.
@@ -55,12 +55,12 @@
 // This should fix the issue.
 
 // Alternatively, edit the lines in cimport.zig mentioned in the error message, manually adding necessary type coercion:
-// value += @floatToInt(c_int, (GetMouseDelta().y / (scrollbar.height - slider.height)) * @intToFloat(f32, valueRange));
+// value += @intFromFloat(c_int, (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange));
 //
 // Also correct the lines below it:
-// value += (GetMouseDelta().x / (scrollbar.width - slider.width)) * @intToFloat(f32, valueRange);
+// value += (GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(f32, valueRange);
 // Add similar type coercion:
-// value += @floatToInt(c_int, (GetMouseDelta().x / (scrollbar.width - slider.width)) * @intToFloat(f32, valueRange));
+// value += @intFromFloat(c_int, (GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(f32, valueRange));
 //
 // Apply the same modification to each line where it is needed.
 //
@@ -99,8 +99,8 @@ pub fn main() void
     {
         // Update
         //----------------------------------------------------------------------------------
-        const rec = c.Rectangle{ .x = @intToFloat(f32, c.GetScreenWidth() - @floatToInt(c_int, width) - 250) / 2.0,
-                                 .y = @intToFloat(f32, c.GetScreenHeight() - @floatToInt(c_int, height)) / 2.0,
+        const rec = c.Rectangle{ .x = @floatFromInt(f32, c.GetScreenWidth() - @intFromFloat(c_int, width) - 250) / 2.0,
+                                 .y = @floatFromInt(f32, c.GetScreenHeight() - @intFromFloat(c_int, height)) / 2.0,
                                  .width = width,
                                  .height = height };
         //----------------------------------------------------------------------------------
@@ -116,15 +116,15 @@ pub fn main() void
         c.DrawRectangle(560, 0, c.GetScreenWidth() - 500, c.GetScreenHeight(), c.Fade(c.LIGHTGRAY, 0.3));
 
         if (draw_rect) c.DrawRectangleRec(rec, c.Fade(c.GOLD, 0.6));
-        if (draw_rounded_rect) c.DrawRectangleRounded(rec, roundness, @floatToInt(c_int, segments), c.Fade(c.MAROON, 0.2));
-        if (draw_rounded_lines) c.DrawRectangleRoundedLines(rec, roundness, @floatToInt(c_int, segments), line_thick, c.Fade(c.MAROON, 0.4));
+        if (draw_rounded_rect) c.DrawRectangleRounded(rec, roundness, @intFromFloat(c_int, segments), c.Fade(c.MAROON, 0.2));
+        if (draw_rounded_lines) c.DrawRectangleRoundedLines(rec, roundness, @intFromFloat(c_int, segments), line_thick, c.Fade(c.MAROON, 0.4));
 
         // Draw GUI controls
         //------------------------------------------------------------------------------
         _ = c.GuiSliderBar(.{ .x = 640.0, .y = 40.0, .width = 105.0, .height = 20.0 }, "Width", null,
-                           &width, 0.0, @intToFloat(f32, c.GetScreenWidth()) - 300.0);
+                           &width, 0.0, @floatFromInt(f32, c.GetScreenWidth()) - 300.0);
         _ = c.GuiSliderBar(.{ .x = 640.0, .y = 70.0, .width = 105.0, .height = 20.0 }, "Height", null,
-                           &height, 0.0, @intToFloat(f32, c.GetScreenHeight()) - 50.0);
+                           &height, 0.0, @floatFromInt(f32, c.GetScreenHeight()) - 50.0);
         _ = c.GuiSliderBar(.{ .x = 640.0, .y = 140.0, .width = 105.0, .height = 20.0 }, "Roundness", null,
                            &roundness, 0.0, 1.0);
         _ = c.GuiSliderBar(.{ .x = 640.0, .y = 170.0, .width = 105.0, .height = 20.0 }, "Thickness", null,

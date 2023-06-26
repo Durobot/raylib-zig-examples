@@ -81,13 +81,13 @@ pub fn main() void
         if (!use_ttf)
         {
             c.DrawTextEx(font_bm, msg, .{ .x = 20.0, .y = 100.0 },
-                         @intToFloat(f32, font_bm.baseSize), 2, c.MAROON);
+                         @floatFromInt(f32, font_bm.baseSize), 2, c.MAROON);
             c.DrawText("Using BMFont (Angelcode) imported", 20, c.GetScreenHeight() - 30, 20, c.GRAY);
         }
         else
         {
             c.DrawTextEx(font_ttf, msg, .{ .x = 20.0, .y = 100.0 },
-                         @intToFloat(f32, font_ttf.baseSize), 2, c.LIME);
+                         @floatFromInt(f32, font_ttf.baseSize), 2, c.LIME);
             c.DrawText("Using TTF font generated", 20, c.GetScreenHeight() - 30, 20, c.GRAY);
         }
         //---------------------------------------------------------------------------------

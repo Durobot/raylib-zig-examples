@@ -49,8 +49,8 @@ pub fn main() void
     c.InitWindow(screen_width, screen_height, "raylib [core] example - window flags");
     defer c.CloseWindow(); // Close window and OpenGL context
 
-    var ball_pos = c.Vector2{ .x = @intToFloat(f32, c.GetScreenWidth()) / 2.0,
-                              .y = @intToFloat(f32, c.GetScreenHeight()) / 2.0 };
+    var ball_pos = c.Vector2{ .x = @floatFromInt(f32, c.GetScreenWidth()) / 2.0,
+                              .y = @floatFromInt(f32, c.GetScreenHeight()) / 2.0 };
     var ball_speed = c.Vector2{ .x = 5.0, .y = 4.0 };
     const ball_radius = 20.0;
 
@@ -154,9 +154,9 @@ pub fn main() void
         // Bouncing ball logic
         ball_pos.x += ball_speed.x;
         ball_pos.y += ball_speed.y;
-        if ((ball_pos.x >= (@intToFloat(f32, c.GetScreenWidth()) - ball_radius)) or (ball_pos.x <= ball_radius))
+        if ((ball_pos.x >= (@floatFromInt(f32, c.GetScreenWidth()) - ball_radius)) or (ball_pos.x <= ball_radius))
             ball_speed.x = -ball_speed.x;
-        if ((ball_pos.y >= (@intToFloat(f32, c.GetScreenHeight()) - ball_radius)) or (ball_pos.y <= ball_radius))
+        if ((ball_pos.y >= (@floatFromInt(f32, c.GetScreenHeight()) - ball_radius)) or (ball_pos.y <= ball_radius))
             ball_speed.y = -ball_speed.y;
         //----------------------------------------------------------------------------------
 
@@ -172,8 +172,8 @@ pub fn main() void
 
         c.DrawCircleV(ball_pos, ball_radius, c.MAROON);
         c.DrawRectangleLinesEx(.{ .x = 0.0, .y = 0,
-                                  .width = @intToFloat(f32, c.GetScreenWidth()),
-                                  .height = @intToFloat(f32, c.GetScreenHeight()) }, 4, c.RAYWHITE);
+                                  .width = @floatFromInt(f32, c.GetScreenWidth()),
+                                  .height = @floatFromInt(f32, c.GetScreenHeight()) }, 4, c.RAYWHITE);
 
         c.DrawCircleV(c.GetMousePosition(), 10, c.DARKBLUE);
 
