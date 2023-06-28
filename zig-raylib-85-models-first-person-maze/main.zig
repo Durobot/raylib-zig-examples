@@ -77,8 +77,8 @@ pub fn main() void
         const player_pos = .{ .x = camera.position.x, .y = camera.position.z };
         const player_radius = 0.1; // Collision radius (player is modelled as a cilinder for collision)
 
-        var player_cell_x = @intFromFloat(i32, player_pos.x - map_pos.x + 0.5);
-        var player_cell_y = @intFromFloat(i32, player_pos.y - map_pos.z + 0.5);
+        var player_cell_x: i32 = @intFromFloat(player_pos.x - map_pos.x + 0.5);
+        var player_cell_y: i32 = @intFromFloat(player_pos.y - map_pos.z + 0.5);
 
         // Out-of-limits security check
         if (player_cell_x < 0)
@@ -95,14 +95,14 @@ pub fn main() void
 
         // Check map collisions using image data and player position
         // TODO: Improvement: Just check player surrounding cells for collision
-        for (0..@intCast(usize, cubicmap.height)) |y|
+        for (0..@intCast(cubicmap.height)) |y| // @intCast -> usize
         {
-            for (0..@intCast(usize, cubicmap.width)) |x|
+            for (0..@intCast(cubicmap.width)) |x| // @intCast -> usize
             {
-                if ((map_pixels[y * @intCast(usize, cubicmap.width) + x].r == 255) and // Collision: white pixel, only check R channel
+                if ((map_pixels[y * @as(usize, @intCast(cubicmap.width)) + x].r == 255) and // Collision: white pixel, only check R channel
                     c.CheckCollisionCircleRec(player_pos, player_radius,
-                                              .{ .x = map_pos.x - 0.5 + @floatFromInt(f32, x),
-                                                 .y = map_pos.z - 0.5 + @floatFromInt(f32, y),
+                                              .{ .x = map_pos.x - 0.5 + @as(f32, @floatFromInt(x)),
+                                                 .y = map_pos.z - 0.5 + @as(f32, @floatFromInt(y)),
                                                  .width = 1.0, .height = 1.0 }))
                     camera.position = old_cam_pos; // Collision detected, reset camera position
             }
@@ -123,7 +123,7 @@ pub fn main() void
         }
 
         c.DrawTextureEx(cubicmap,
-                        .{ .x = @floatFromInt(f32, c.GetScreenWidth() - cubicmap.width * 4 - 20),
+                        .{ .x = @floatFromInt(c.GetScreenWidth() - cubicmap.width * 4 - 20),
                            .y = 20.0 }, 0.0, 4.0, c.WHITE);
         c.DrawRectangleLines(c.GetScreenWidth() - cubicmap.width * 4 - 20, 20,
                              cubicmap.width * 4, cubicmap.height * 4, c.GREEN);

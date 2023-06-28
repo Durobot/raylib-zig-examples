@@ -37,7 +37,7 @@ pub fn main() void
     defer c.CloseWindow(); // Close window and OpenGL context
 
     // Box variables to be animated with easings
-    var rec = c.Rectangle{ .x = @floatFromInt(f32, c.GetScreenWidth()) / 2.0, .y = -100, .width = 100, .height = 100 };
+    var rec = c.Rectangle{ .x = @as(f32, @floatFromInt(c.GetScreenWidth())) / 2.0, .y = -100, .width = 100, .height = 100 };
     var rotation: f32 = 0.0;
     var alpha: f32 = 1.0;
 
@@ -58,7 +58,7 @@ pub fn main() void
 
                 // NOTE: Remember that 3rd parameter of easing function refers to
                 // desired value variation, do not confuse it with expected final value!
-                rec.y = c.EaseElasticOut(@floatFromInt(f32, frames_counter), -100, @floatFromInt(f32, c.GetScreenHeight()) / 2.0 + 100, 120);
+                rec.y = c.EaseElasticOut(@floatFromInt(frames_counter), -100, @as(f32, @floatFromInt(c.GetScreenHeight())) / 2.0 + 100.0, 120);
 
                 if (frames_counter >= 120)
                 {
@@ -69,8 +69,8 @@ pub fn main() void
             1 =>      // Scale box to an horizontal bar
             {
                 frames_counter += 1;
-                rec.height = c.EaseBounceOut(@floatFromInt(f32, frames_counter), 100, -90, 120);
-                rec.width = c.EaseBounceOut(@floatFromInt(f32, frames_counter), 100, @floatFromInt(f32, c.GetScreenWidth()), 120);
+                rec.height = c.EaseBounceOut(@floatFromInt(frames_counter), 100, -90, 120);
+                rec.width = c.EaseBounceOut(@floatFromInt(frames_counter), 100, @floatFromInt(c.GetScreenWidth()), 120);
 
                 if (frames_counter >= 120)
                 {
@@ -81,7 +81,7 @@ pub fn main() void
             2 =>      // Rotate horizontal bar rectangle
             {
                 frames_counter += 1;
-                rotation = c.EaseQuadOut(@floatFromInt(f32, frames_counter), 0.0, 270.0, 240);
+                rotation = c.EaseQuadOut(@floatFromInt(frames_counter), 0.0, 270.0, 240);
 
                 if (frames_counter >= 240)
                 {
@@ -92,7 +92,7 @@ pub fn main() void
             3 =>      // Increase bar size to fill all screen
             {
                 frames_counter += 1;
-                rec.height = c.EaseCircOut(@floatFromInt(f32, frames_counter), 10, @floatFromInt(f32, c.GetScreenWidth()), 120);
+                rec.height = c.EaseCircOut(@floatFromInt(frames_counter), 10, @floatFromInt(c.GetScreenWidth()), 120);
 
                 if (frames_counter >= 120)
                 {
@@ -103,7 +103,7 @@ pub fn main() void
             4 =>      // Fade out animation
             {
                 frames_counter += 1;
-                alpha = c.EaseSineOut(@floatFromInt(f32, frames_counter), 1.0, -1.0, 160);
+                alpha = c.EaseSineOut(@floatFromInt(frames_counter), 1.0, -1.0, 160);
 
                 if (frames_counter >= 160)
                 {
@@ -117,7 +117,7 @@ pub fn main() void
         // Reset animation at any moment
         if (c.IsKeyPressed(c.KEY_SPACE))
         {
-            rec = .{ .x = @floatFromInt(f32, c.GetScreenWidth()) / 2.0, .y = -100.0, .width = 100.0, .height = 100.0 };
+            rec = .{ .x = @as(f32, @floatFromInt(c.GetScreenWidth())) / 2.0, .y = -100.0, .width = 100.0, .height = 100.0 };
             rotation = 0.0;
             alpha = 1.0;
             state = 0;

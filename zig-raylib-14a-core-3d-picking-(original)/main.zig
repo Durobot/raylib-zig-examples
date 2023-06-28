@@ -112,7 +112,7 @@ pub fn main() void
         if (collision.hit)
             c.DrawText("BOX SELECTED",
                        @divTrunc(screen_width - c.MeasureText("BOX SELECTED", 30), 2),
-                       @intFromFloat(c_int, screen_height * 0.1), 30, c.GREEN);
+                       @intFromFloat(screen_height * 0.1), 30, c.GREEN);
         c.DrawText("Right click mouse to toggle camera controls", 10, 430, 10, c.GRAY);
         c.DrawFPS(10, 10);
         //---------------------------------------------------------------------------------

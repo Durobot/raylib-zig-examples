@@ -112,9 +112,9 @@ pub fn main() void
                 c.DrawRectangle(10, 30 + 20*i, 200, 20, c.Fade(c.LIGHTGRAY, 0.3));
 
             if (i < gestures_count - 1)
-            {   c.DrawText(&gesture_strings[@intCast(usize, i)], 35, 36 + 20*i, 10, c.DARKGRAY);   }
+            {   c.DrawText(&gesture_strings[@intCast(i)], 35, 36 + 20*i, 10, c.DARKGRAY);   }
             else
-                c.DrawText(&gesture_strings[@intCast(usize, i)], 35, 36 + 20*i, 10, c.MAROON);
+                c.DrawText(&gesture_strings[@intCast(i)], 35, 36 + 20*i, 10, c.MAROON);
         }
 
         c.DrawRectangleLines(10, 29, 200, screen_height - 50, c.GRAY);

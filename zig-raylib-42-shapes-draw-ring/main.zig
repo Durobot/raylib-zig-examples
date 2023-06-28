@@ -26,13 +26,13 @@
 // you're going to see errors similar to this:
 
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:27: error: incompatible types: 'c_int' and 'f32'
-//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange);
+//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(valueRange);
 //                     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:21: note: type 'c_int' here
-//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange);
+//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(valueRange);
 //                     ^~~~~
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:87: note: type 'f32' here
-//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange);
+//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(valueRange);
 //                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Zig incorrectly skips type coercion when translating certain C code in raygui.h.
@@ -56,12 +56,12 @@
 // This should fix the issue.
 
 // Alternatively, edit the lines in cimport.zig mentioned in the error message, manually adding necessary type coercion:
-// value += @intFromFloat(c_int, (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange));
+// value += @intFromFloat((GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(valueRange));
 //
 // Also correct the lines below it:
-// value += (GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(f32, valueRange);
+// value += (GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(valueRange);
 // Add similar type coercion:
-// value += @intFromFloat(c_int, (GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(f32, valueRange));
+// value += @intFromFloat((GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(valueRange));
 //
 // Apply the same modification to each line where it is needed.
 //
@@ -85,7 +85,8 @@ pub fn main() void
     c.InitWindow(screen_width, screen_height, "raylib [shapes] example - draw ring");
     defer c.CloseWindow(); // Close window and OpenGL context
 
-    const center = c.Vector2{ .x = @floatFromInt(f32, c.GetScreenWidth() - 300) / 2.0, .y = @floatFromInt(f32, c.GetScreenHeight()) / 2.0 };
+    const center = c.Vector2{ .x = @as(f32, @floatFromInt(c.GetScreenWidth() - 300)) / 2.0,
+                              .y = @as(f32, @floatFromInt(c.GetScreenHeight())) / 2.0 };
 
     var inner_radius: f32 = 80.0;
     var outer_radius: f32 = 190.0;
@@ -119,13 +120,13 @@ pub fn main() void
 
         if (draw_ring)
             c.DrawRing(center, inner_radius, outer_radius, start_angle, end_angle,
-                       @intFromFloat(c_int, segments), c.Fade(c.MAROON, 0.3));
+                       @intFromFloat(segments), c.Fade(c.MAROON, 0.3));
         if (draw_ring_lines)
             c.DrawRingLines(center, inner_radius, outer_radius, start_angle, end_angle,
-                            @intFromFloat(c_int, segments), c.Fade(c.BLACK, 0.4));
+                            @intFromFloat(segments), c.Fade(c.BLACK, 0.4));
         if (draw_circle_lines)
             c.DrawCircleSectorLines(center, outer_radius, start_angle, end_angle,
-                                    @intFromFloat(c_int, segments), c.Fade(c.BLACK, 0.4));
+                                    @intFromFloat(segments), c.Fade(c.BLACK, 0.4));
 
         // Draw GUI controls
         //------------------------------------------------------------------------------
@@ -143,11 +144,15 @@ pub fn main() void
         _ = c.GuiCheckBox(.{ .x = 600, .y = 380, .width = 20, .height = 20 }, "Draw CircleLines", &draw_circle_lines);
         //------------------------------------------------------------------------------
 
-        var min_segments: i32 = @intFromFloat(i32, @ceil((end_angle - start_angle) / 90.0));
-        c.DrawText(c.TextFormat("MODE: %s", @ptrCast([*c]const u8,
-                                            if (@intFromFloat(i32, segments) >= min_segments) "MANUAL" else "AUTO")),
-                   600, 270, 10, if (@intFromFloat(i32, segments) >= min_segments) c.MAROON else c.DARKGRAY);
-
+        var min_segments: i32 = @intFromFloat(@ceil((end_angle - start_angle) / 90.0));
+        // @ptrCast -> [*c]const u8: https://github.com/ziglang/zig/issues/16234
+        // -- This code causes Zig compiler (0.11.0-dev.3859+88284c124) to segfault, see
+        // -- https://github.com/ziglang/zig/issues/16197
+        //c.DrawText(c.TextFormat("MODE: %s", if (@as(i32, @intFromFloat(segments)) >= min_segments) "MANUAL"
+        //                                    else "AUTO"),
+        //           600, 270, 10, if (@as(i32, @intFromFloat(segments)) >= min_segments) c.MAROON else c.DARKGRAY);
+        const text = if (@as(i32, @intFromFloat(segments)) >= min_segments) "MODE: MANUAL" else "MODE: AUTO";
+        c.DrawText(text, 600, 270, 10, if (@as(i32, @intFromFloat(segments)) >= min_segments) c.MAROON else c.DARKGRAY);
         c.DrawFPS(10, 10);
         //---------------------------------------------------------------------------------
     }

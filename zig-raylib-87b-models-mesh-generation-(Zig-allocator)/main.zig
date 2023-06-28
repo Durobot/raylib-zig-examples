@@ -82,7 +82,7 @@ pub fn main() void
     defer
     {
         // Unload meshes
-        for(0..@intCast(usize, models[num_models - 1].meshCount)) |i|
+        for(0..@intCast(models[num_models - 1].meshCount)) |i| // @intCast -> usize
         {   // For each mesh, do what c.UnloadMesh() does.
             // https://github.com/raysan5/raylib/blob/7d68aa686974347cefe0ef481c835e3d60bdc4b9/src/rmodels.c#L1755
             c.rlUnloadVertexArray(models[num_models - 1].meshes[i].vaoId);
@@ -117,7 +117,7 @@ pub fn main() void
         }
 
         // Unload materials maps
-        for (0..@intCast(usize, models[num_models - 1].materialCount)) |i|
+        for (0..@intCast(models[num_models - 1].materialCount)) |i| // @intCast -> usize
             c.MemFree(models[num_models - 1].materials[i].maps);
 
         // Unload arrays
@@ -245,20 +245,20 @@ fn GenMeshCustom(alloc8r: std.mem.Allocator) c.Mesh
         .vertexCount = vertex_count,
         .triangleCount = 1,
         // 3 vertices, 3 coordinates each (x, y, z)
-        .vertices = @ptrCast([*c]f32, alloc8r.alloc(f32, vertex_count * 3) catch |err|
+        .vertices = @ptrCast(alloc8r.alloc(f32, vertex_count * 3) catch |err| // @ptrCast -> [*c]f32
         {
             std.debug.print("Memory allocation error: {}\n", .{err});
             @panic("Memory allocation error");
         }),
         // 3 vertices, 2 coordinates each (x, y)
-        .texcoords = @ptrCast([*c]f32, alloc8r.alloc(f32, vertex_count * 2) catch |err|
+        .texcoords = @ptrCast(alloc8r.alloc(f32, vertex_count * 2) catch |err| // @ptrCast -> [*c]f32
         {
             std.debug.print("Memory allocation error: {}\n", .{err});
             @panic("Memory allocation error");
         }),
         .texcoords2 = null,
         // 3 vertices, 3 coordinates each (x, y, z)
-        .normals = @ptrCast([*c]f32, alloc8r.alloc(f32, vertex_count * 3) catch |err|
+        .normals = @ptrCast(alloc8r.alloc(f32, vertex_count * 3) catch |err| // @ptrCast -> [*c]f32
         {
             std.debug.print("Memory allocation error: {}\n", .{err});
             @panic("Memory allocation error");

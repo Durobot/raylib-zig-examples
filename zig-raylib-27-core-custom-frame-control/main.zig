@@ -76,7 +76,7 @@ pub fn main() void
         if (!pause)
         {
             position += 200 * delta_time;  // We move at 200 pixels per second
-            if (@intFromFloat(c_int, position) >= c.GetScreenWidth()) position = 0.0;
+            if (@as(c_int, @intFromFloat(position)) >= c.GetScreenWidth()) position = 0.0;
             time_counter += delta_time;   // We count time (seconds)
         }
         //----------------------------------------------------------------------------------
@@ -89,25 +89,30 @@ pub fn main() void
 
             c.ClearBackground(c.RAYWHITE);
 
-            for (0..@intCast(usize, @divTrunc(c.GetScreenWidth(), 200))) |i|
-                c.DrawRectangle(200 * @intCast(c_int, i), 0, 1, c.GetScreenHeight(), c.SKYBLUE);
+            // @intCast -> usize
+            for (0..@intCast(@divTrunc(c.GetScreenWidth(), 200))) |i|
+                c.DrawRectangle(200 * @as(c_int, @intCast(i)), 0, 1, c.GetScreenHeight(), c.SKYBLUE);
 
-            c.DrawCircle(@intFromFloat(c_int, position), @divTrunc(c.GetScreenHeight(), 2) - 25, 50, c.RED);
+            c.DrawCircle(@intFromFloat(position), @divTrunc(c.GetScreenHeight(), 2) - 25, 50, c.RED);
 
             c.DrawText(c.TextFormat("%03.0f ms", time_counter * 1000.0),
-                       @intFromFloat(c_int, position) - 40,
+                       @as(c_int, @intFromFloat(position)) - 40,
                        @divTrunc(c.GetScreenHeight(), 2) - 100, 20, c.MAROON);
             c.DrawText(c.TextFormat("PosX: %03.0f", position),
-                       @intFromFloat(c_int, position) - 50,
+                       @as(c_int, @intFromFloat(position)) - 50,
                        @divTrunc(c.GetScreenHeight(), 2) + 40, 20, c.BLACK);
 
             c.DrawText("Circle is moving at a constant 200 pixels/sec,\nindependently of the frame rate.", 10, 10, 20, c.DARKGRAY);
             c.DrawText("PRESS SPACE to PAUSE MOVEMENT", 10, c.GetScreenHeight() - 60, 20, c.GRAY);
             c.DrawText("PRESS UP | DOWN to CHANGE TARGET FPS", 10, c.GetScreenHeight() - 30, 20, c.GRAY);
             c.DrawText(c.TextFormat("TARGET FPS: %i", target_fps), c.GetScreenWidth() - 220, 10, 20, c.LIME);
-            c.DrawText(c.TextFormat("CURRENT FPS: %i",
-                                    if (delta_time == 0.0) 0 else @intFromFloat(c_int, 1.0 / delta_time)),
-                       c.GetScreenWidth() - 220, 40, 20, c.GREEN);
+            // -- This code causes Zig compiler (0.11.0-dev.3859+88284c124) to segfault, see
+            // -- https://github.com/ziglang/zig/issues/16197
+            //c.DrawText(c.TextFormat("CURRENT FPS: %i",
+            //                        if (delta_time == 0.0) 0 else @intFromFloat(1.0 / delta_time)),
+            //           c.GetScreenWidth() - 220, 40, 20, c.GREEN);
+            const fps: c_int = if (delta_time == 0.0) 0 else @intFromFloat(1.0 / delta_time);
+            c.DrawText(c.TextFormat("CURRENT FPS: %i", fps), c.GetScreenWidth() - 220, 40, 20, c.GREEN);
         }
 
 
@@ -120,16 +125,16 @@ pub fn main() void
 
         if (target_fps > 0)          // We want a fixed frame rate
         {
-            wait_time = (1.0 / @floatFromInt(f32, target_fps)) - update_draw_time;
+            wait_time = (1.0 / @as(f64, @floatFromInt(target_fps))) - update_draw_time;
             if (wait_time > 0.0)
             {
                 c.WaitTime(wait_time);
                 cur_time = c.GetTime();
-                delta_time = @floatCast(f32, cur_time - prev_time);
+                delta_time = @floatCast(cur_time - prev_time); // @floatCast -> f32
             }
         }
-        else
-            delta_time = @floatCast(f32, update_draw_time); // Framerate could be variable
+        else // @floatCast -> f32
+            delta_time = @floatCast(update_draw_time); // Framerate could be variable
 
         prev_time = cur_time;
         //---------------------------------------------------------------------------------

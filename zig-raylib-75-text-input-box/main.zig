@@ -67,7 +67,7 @@ pub fn main() void
                 // NOTE: Only allow keys in range [32..125]
                 if ((key >= 32) and (key <= 125) and (letter_count < max_input_chars))
                 {
-                    name[letter_count] = @intCast(u8, key);
+                    name[letter_count] = @intCast(key); // u8
                     name[letter_count + 1] = '\x00'; // Add null terminator at the end of the string.
                     letter_count += 1;
                 }
@@ -108,16 +108,16 @@ pub fn main() void
         c.DrawRectangleRec(text_box, c.LIGHTGRAY);
         if (mouse_on_text)
         {
-            c.DrawRectangleLines(@intFromFloat(c_int, text_box.x), @intFromFloat(c_int, text_box.y),
-                                 @intFromFloat(c_int, text_box.width), @intFromFloat(c_int, text_box.height),
+            c.DrawRectangleLines(@intFromFloat(text_box.x), @intFromFloat(text_box.y),
+                                 @intFromFloat(text_box.width), @intFromFloat(text_box.height),
                                  c.RED);
         }
         else
-            c.DrawRectangleLines(@intFromFloat(c_int, text_box.x), @intFromFloat(c_int, text_box.y),
-                                 @intFromFloat(c_int, text_box.width), @intFromFloat(c_int, text_box.height),
+            c.DrawRectangleLines(@intFromFloat(text_box.x), @intFromFloat(text_box.y),
+                                 @intFromFloat(text_box.width), @intFromFloat(text_box.height),
                                  c.DARKGRAY);
 
-        c.DrawText(&name, @intFromFloat(c_int, text_box.x) + 5, @intFromFloat(c_int, text_box.y) + 8, 40, c.MAROON);
+        c.DrawText(&name, @as(c_int, @intFromFloat(text_box.x)) + 5, @as(c_int, @intFromFloat(text_box.y)) + 8, 40, c.MAROON);
 
         c.DrawText(c.TextFormat("INPUT CHARS: %i/%i", letter_count, @as(i32, max_input_chars)), 315, 250, 20, c.DARKGRAY);
 
@@ -127,8 +127,8 @@ pub fn main() void
             {
                 // Draw blinking underscore char
                 if (((frames_counter/20)%2) == 0)
-                    c.DrawText("_", @intFromFloat(c_int, text_box.x) + 8 + c.MeasureText(&name, 40),
-                               @intFromFloat(c_int, text_box.y) + 12, 40, c.MAROON);
+                    c.DrawText("_", @as(c_int, @intFromFloat(text_box.x)) + 8 + c.MeasureText(&name, 40),
+                               @as(c_int, @intFromFloat(text_box.y)) + 12, 40, c.MAROON);
             }
             else
                 c.DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, c.GRAY);

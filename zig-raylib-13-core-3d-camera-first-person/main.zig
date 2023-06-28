@@ -55,9 +55,9 @@ pub fn main() void
     //while (i < max_columns) : (i += 1)
     for (0..max_columns) |i|
     {
-        heights[i] = @floatFromInt(f32, c.GetRandomValue(1, 12));
-        positions[i] = .{ .x = @floatFromInt(f32, c.GetRandomValue(-15, 15)), .y = heights[i]/2.0, .z = @floatFromInt(f32, c.GetRandomValue(-15, 15)) };
-        colors[i] = .{ .r = @intCast(u8, c.GetRandomValue(20, 255)), .g = @intCast(u8, c.GetRandomValue(10, 55)), .b = 30, .a = 255 };
+        heights[i] = @floatFromInt(c.GetRandomValue(1, 12));
+        positions[i] = .{ .x = @floatFromInt(c.GetRandomValue(-15, 15)), .y = heights[i]/2.0, .z = @floatFromInt(c.GetRandomValue(-15, 15)) };
+        colors[i] = .{ .r = @intCast(c.GetRandomValue(20, 255)), .g = @intCast(c.GetRandomValue(10, 55)), .b = 30, .a = 255 }; // u8
     }
 
     c.DisableCursor(); // Limit cursor to relative movement inside the window
@@ -190,16 +190,33 @@ pub fn main() void
         c.DrawRectangleLines(600, 5, 195, 100, c.BLUE);
 
         c.DrawText("Camera status:", 610, 15, 10, c.BLACK);
-        c.DrawText(c.TextFormat("- Mode: %s", @ptrCast([*c]const u8, if (camera_mode == c.CAMERA_FREE) "FREE" else
-                                              if (camera_mode == c.CAMERA_FIRST_PERSON) "FIRST_PERSON" else
-                                              if (camera_mode == c.CAMERA_THIRD_PERSON) "THIRD_PERSON" else
-                                              if (camera_mode == c.CAMERA_ORBITAL) "ORBITAL" else "CUSTOM")),
-                   610, 30, 10, c.BLACK);
-        c.DrawText(c.TextFormat("- Projection: %s", @ptrCast([*c]const u8, if (camera.projection == c.CAMERA_PERSPECTIVE) "PERSPECTIVE" else
-                                                    if (camera.projection == c.CAMERA_ORTHOGRAPHIC) "ORTHOGRAPHIC" else
-                                                    "CUSTOM")), 610, 45, 10, c.BLACK);
-        c.DrawText(c.TextFormat("- Position: (%06.3f, %06.3f, %06.3f)", camera.position.x, camera.position.y, camera.position.z), 610, 60, 10, c.BLACK);
-        c.DrawText(c.TextFormat("- Target: (%06.3f, %06.3f, %06.3f)", camera.target.x, camera.target.y, camera.target.z), 610, 75, 10, c.BLACK);
+        // @ptrCast -> [*c]const u8: https://github.com/ziglang/zig/issues/16234
+        // -- This code causes Zig compiler (0.11.0-dev.3859+88284c124) to segfault, see
+        // -- https://github.com/ziglang/zig/issues/16197
+        //c.DrawText(c.TextFormat("- Mode: %s", @ptrCast(if (camera_mode == c.CAMERA_FREE) "FREE" else
+        //                                               if (camera_mode == c.CAMERA_FIRST_PERSON) "FIRST_PERSON" else
+        //                                               if (camera_mode == c.CAMERA_THIRD_PERSON) "THIRD_PERSON" else
+        //                                               if (camera_mode == c.CAMERA_ORBITAL) "ORBITAL" else "CUSTOM")),
+        //           610, 30, 10, c.BLACK);
+        const text_cam_mode = if (camera_mode == c.CAMERA_FREE) "- Mode: FREE" else
+                              if (camera_mode == c.CAMERA_FIRST_PERSON) "- Mode: FIRST_PERSON" else
+                              if (camera_mode == c.CAMERA_THIRD_PERSON) "- Mode: THIRD_PERSON" else
+                              if (camera_mode == c.CAMERA_ORBITAL) "- Mode: ORBITAL" else "- Mode: CUSTOM";
+        c.DrawText(text_cam_mode, 610, 30, 10, c.BLACK);
+        // @ptrCast -> [*c]const u8: https://github.com/ziglang/zig/issues/16234
+        // -- This code causes Zig compiler (0.11.0-dev.3859+88284c124) to segfault, see
+        // -- https://github.com/ziglang/zig/issues/16197
+        //c.DrawText(c.TextFormat("- Projection: %s", if (camera.projection == c.CAMERA_PERSPECTIVE) "PERSPECTIVE" else
+        //                                            if (camera.projection == c.CAMERA_ORTHOGRAPHIC) "ORTHOGRAPHIC" else "CUSTOM"),
+        //           610, 45, 10, c.BLACK);
+        const text_proj = if (camera.projection == c.CAMERA_PERSPECTIVE) "- Projection: PERSPECTIVE" else
+                          if (camera.projection == c.CAMERA_ORTHOGRAPHIC) "- Projection: ORTHOGRAPHIC" else
+                          "- Projection: CUSTOM";
+        c.DrawText(text_proj, 610, 45, 10, c.BLACK);
+        c.DrawText(c.TextFormat("- Position: (%06.3f, %06.3f, %06.3f)", camera.position.x, camera.position.y, camera.position.z),
+                   610, 60, 10, c.BLACK);
+        c.DrawText(c.TextFormat("- Target: (%06.3f, %06.3f, %06.3f)", camera.target.x, camera.target.y, camera.target.z),
+                   610, 75, 10, c.BLACK);
         c.DrawText(c.TextFormat("- Up: (%06.3f, %06.3f, %06.3f)", camera.up.x, camera.up.y, camera.up.z), 610, 90, 10, c.BLACK);
 
         //---------------------------------------------------------------------------------

@@ -71,10 +71,15 @@ pub fn main() void
             c.DrawGrid(10, 1.0);
         }
         c.DrawText("Enemy: 100 / 100",
-                   @intFromFloat(c_int, cube_scr_pos.x) - @divTrunc(c.MeasureText("Enemy: 100/100", 20), 2),
-                   @intFromFloat(c_int, cube_scr_pos.y), 20, c.BLACK);
+                   @as(c_int, @intFromFloat(cube_scr_pos.x)) - @divTrunc(c.MeasureText("Enemy: 100/100", 20), 2),
+                   @intFromFloat(cube_scr_pos.y), 20, c.BLACK);
+        // -- The following code causes Zig compiler (0.11.0-dev.3859+88284c124) to segfault
+        //c.DrawText(c.TextFormat("Cube position in screen space coordinates: [%i, %i]",
+        //                        @intFromFloat(cube_scr_pos.x), @intFromFloat(cube_scr_pos.y)),
+        //           10, 10, 20, c.LIME);
+        // -- But this does not
         c.DrawText(c.TextFormat("Cube position in screen space coordinates: [%i, %i]",
-                                @intFromFloat(c_int, cube_scr_pos.x), @intFromFloat(c_int, cube_scr_pos.y)),
+                                @as(c_int, @intFromFloat(cube_scr_pos.x)), @as(c_int, @intFromFloat(cube_scr_pos.y))),
                    10, 10, 20, c.LIME);
         c.DrawText("Text 2d should be always on top of the cube", 10, 40, 20, c.GRAY);
         c.DrawFPS(screen_width - 100, 10);

@@ -80,7 +80,8 @@ pub fn main() void
     const checked_im = c.Image
     {
         // pixels is a pointer already, unlike in 54a
-        .data = @ptrCast(?*anyopaque, pixels), // We can assign pixels directly to data
+        // @ptrCast -> ?*anyopaque
+        .data = @ptrCast(pixels), // We can assign pixels directly to data
         .width = width,
         .height = height,
         .format = c.PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,

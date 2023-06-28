@@ -167,10 +167,13 @@ fn GenMeshCustom() c.Mesh
     {
         .vertexCount = 3,
         .triangleCount = 1,
-        .vertices = @ptrCast([*c]f32, @alignCast(@alignOf(f32), c.MemAlloc(3 * 3 * @sizeOf(f32)).?)), // 3 vertices, 3 coordinates each (x, y, z)
-        .texcoords = @ptrCast([*c]f32, @alignCast(@alignOf(f32), c.MemAlloc(3 * 2 * @sizeOf(f32)).?)), // 3 vertices, 2 coordinates each (x, y)
+        // @ptrCast -> [*c]f32, @alignCast -> @alignOf(f32)
+        .vertices = @ptrCast(@alignCast(c.MemAlloc(3 * 3 * @sizeOf(f32)).?)), // 3 vertices, 3 coordinates each (x, y, z)
+        // @ptrCast -> [*c]f32, @alignCast -> @alignOf(f32)
+        .texcoords = @ptrCast(@alignCast(c.MemAlloc(3 * 2 * @sizeOf(f32)).?)), // 3 vertices, 2 coordinates each (x, y)
         .texcoords2 = null,
-        .normals = @ptrCast([*c]f32, @alignCast(@alignOf(f32), c.MemAlloc(3 * 3 * @sizeOf(f32)).?)), // 3 vertices, 3 coordinates each (x, y, z)
+        // @ptrCast -> [*c]f32, @alignCast -> @alignOf(f32)
+        .normals = @ptrCast(@alignCast(c.MemAlloc(3 * 3 * @sizeOf(f32)).?)), // 3 vertices, 3 coordinates each (x, y, z)
         .tangents = null, .colors = null, .indices = null, .animVertices = null, .animNormals = null,
         .boneIds = null, .boneWeights = null, .vaoId = 0,
         // UploadMesh() uses RL_CALLOC() macro to allocate MAX_MESH_VERTEX_BUFFERS unsigned ints,

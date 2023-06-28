@@ -156,7 +156,7 @@ fn DrawTextBoxedSelectable(font: c.Font, text: [*c]const u8, rec: c.Rectangle,
     var text_offset_y: f32 = 0.0; // Offset between lines (on line break '\n')
     var text_offset_x: f32 = 0.0; // Offset X to next character to draw
 
-    const scale_factor = font_size / @floatFromInt(f32, font.baseSize); // Character rectangle scaling factor
+    const scale_factor = font_size / @as(f32, @floatFromInt(font.baseSize)); // Character rectangle scaling factor
 
     // Word/character wrapping mechanism variables
     const State = enum { MEASURE_STATE, DRAW_STATE };
@@ -178,7 +178,7 @@ fn DrawTextBoxedSelectable(font: c.Font, text: [*c]const u8, rec: c.Rectangle,
 
         // Get next codepoint from byte string and glyph index in font
         var codepoint_byte_count: c_int = 0;
-        const codepoint = c.GetCodepoint(&text[@intCast(usize, i)], &codepoint_byte_count);
+        const codepoint = c.GetCodepoint(&text[@intCast(i)], &codepoint_byte_count); // @intCast -> usize
         const index = c.GetGlyphIndex(font, codepoint);
 
         // NOTE: Normally we exit the decoding sequence as soon as a bad byte is found (and return 0x3f)
@@ -190,10 +190,10 @@ fn DrawTextBoxedSelectable(font: c.Font, text: [*c]const u8, rec: c.Rectangle,
         var glyph_width: f32 = 0.0;
         if (codepoint != '\n')
         {
-            glyph_width = if (font.glyphs[@intCast(usize, index)].advanceX == 0)
-                              font.recs[@intCast(usize, index)].width * scale_factor
+            glyph_width = if (font.glyphs[@intCast(index)].advanceX == 0) // @intCast -> usize
+                              font.recs[@intCast(index)].width * scale_factor // @intCast -> usize
                           else
-                              @floatFromInt(f32, font.glyphs[@intCast(usize, index)].advanceX) * scale_factor;
+                              @as(f32, @floatFromInt(font.glyphs[@intCast(index)].advanceX)) * scale_factor; // @intCast -> usize
             if (i + 1 < length)
                 glyph_width += spacing;
         }
@@ -249,7 +249,7 @@ fn DrawTextBoxedSelectable(font: c.Font, text: [*c]const u8, rec: c.Rectangle,
             {
                 if (!word_wrap)
                 {
-                    text_offset_y += @floatFromInt(f32, (font.baseSize + @divTrunc(font.baseSize, 2))) * scale_factor;
+                    text_offset_y += @as(f32, @floatFromInt((font.baseSize + @divTrunc(font.baseSize, 2)))) * scale_factor;
                     text_offset_x = 0.0;
                 }
             }
@@ -257,12 +257,12 @@ fn DrawTextBoxedSelectable(font: c.Font, text: [*c]const u8, rec: c.Rectangle,
             {
                 if (!word_wrap and ((text_offset_x + glyph_width) > rec.width))
                 {
-                    text_offset_y += @floatFromInt(f32, (font.baseSize + @divTrunc(font.baseSize, 2))) * scale_factor;
+                    text_offset_y += @as(f32, @floatFromInt((font.baseSize + @divTrunc(font.baseSize, 2)))) * scale_factor;
                     text_offset_x = 0.0;
                 }
 
                 // When text overflows rectangle height limit, just stop drawing
-                if ((text_offset_y + @floatFromInt(f32, font.baseSize) * scale_factor) > rec.height)
+                if ((text_offset_y + @as(f32, @floatFromInt(font.baseSize)) * scale_factor) > rec.height)
                     break;
 
                 // Draw selection background
@@ -270,7 +270,7 @@ fn DrawTextBoxedSelectable(font: c.Font, text: [*c]const u8, rec: c.Rectangle,
                 if ((select_start >= 0) and (k >= select_start) and (k < (select_start + select_length)))
                 {
                     c.DrawRectangleRec(.{ .x =  rec.x + text_offset_x - 1.0, .y = rec.y + text_offset_y,
-                                       .width = glyph_width, .height = @floatFromInt(f32, font.baseSize) * scale_factor },
+                                       .width = glyph_width, .height = @as(f32, @floatFromInt(font.baseSize)) * scale_factor },
                                        select_back_tint);
                     is_glyph_selected = true;
                 }
@@ -284,7 +284,7 @@ fn DrawTextBoxedSelectable(font: c.Font, text: [*c]const u8, rec: c.Rectangle,
 
             if (word_wrap and (i == end_line))
             {
-                text_offset_y += @floatFromInt(f32, (font.baseSize + @divTrunc(font.baseSize, 2))) * scale_factor;
+                text_offset_y += @as(f32, @floatFromInt((font.baseSize + @divTrunc(font.baseSize, 2)))) * scale_factor;
                 text_offset_x = 0.0;
                 start_line = end_line;
                 end_line = -1;

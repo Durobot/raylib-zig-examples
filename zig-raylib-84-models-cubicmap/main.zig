@@ -79,7 +79,8 @@ pub fn main() void
 
             c.DrawModel(model, map_pos, 1.0, c.WHITE);
         }
-        c.DrawTextureEx(cubicmap, .{ .x = screen_width - @floatFromInt(f32, cubicmap.width) * 4.0 - 20.0, .y = 20.0 }, 0.0, 4.0, c.WHITE);
+        c.DrawTextureEx(cubicmap, .{ .x = screen_width - @as(f32, @floatFromInt(cubicmap.width)) * 4.0 - 20.0, .y = 20.0 },
+                        0.0, 4.0, c.WHITE);
         c.DrawRectangleLines(screen_width - cubicmap.width * 4 - 20, 20, cubicmap.width * 4, cubicmap.height * 4, c.GREEN);
 
         c.DrawText("cubicmap image used to", 658, 90, 10, c.GRAY);

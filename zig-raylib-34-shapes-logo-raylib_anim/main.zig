@@ -158,7 +158,7 @@ pub fn main() void
                                 @divTrunc(c.GetScreenHeight(), 2) - 112, 224, 224,
                                 c.Fade(c.RAYWHITE, alpha));
 
-                c.DrawText(c.TextSubtext("raylib", 0, @intCast(c_int, letters_count)),
+                c.DrawText(c.TextSubtext("raylib", 0, @intCast(letters_count)), // c_int
                            @divTrunc(c.GetScreenWidth(), 2) - 44,
                            @divTrunc(c.GetScreenHeight(), 2) + 48, 50, c.Fade(c.BLACK, alpha));
             },

@@ -25,13 +25,13 @@
 // you're going to see errors similar to this:
 
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:27: error: incompatible types: 'c_int' and 'f32'
-//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange);
+//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(valueRange);
 //                     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:21: note: type 'c_int' here
-//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange);
+//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(valueRange);
 //                     ^~~~~
 // /home/archie/.cache/zig/o/c95bc39f271b884ec25d6b2251a68075/cimport.zig:7631:87: note: type 'f32' here
-//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange);
+//                     value += (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(valueRange);
 //                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Zig incorrectly skips type coercion when translating certain C code in raygui.h.
@@ -55,12 +55,12 @@
 // This should fix the issue.
 
 // Alternatively, edit the lines in cimport.zig mentioned in the error message, manually adding necessary type coercion:
-// value += @intFromFloat(c_int, (GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(f32, valueRange));
+// value += @intFromFloat((GetMouseDelta().y / (scrollbar.height - slider.height)) * @floatFromInt(valueRange));
 //
 // Also correct the lines below it:
-// value += (GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(f32, valueRange);
+// value += (GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(valueRange);
 // Add similar type coercion:
-// value += @intFromFloat(c_int, (GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(f32, valueRange));
+// value += @intFromFloat((GetMouseDelta().x / (scrollbar.width - slider.width)) * @floatFromInt(valueRange));
 //
 // Apply the same modification to each line where it is needed.
 //
@@ -99,8 +99,8 @@ pub fn main() void
     {
         // Update
         //----------------------------------------------------------------------------------
-        const rec = c.Rectangle{ .x = @floatFromInt(f32, c.GetScreenWidth() - @intFromFloat(c_int, width) - 250) / 2.0,
-                                 .y = @floatFromInt(f32, c.GetScreenHeight() - @intFromFloat(c_int, height)) / 2.0,
+        const rec = c.Rectangle{ .x = @as(f32, @floatFromInt(c.GetScreenWidth() - @as(c_int, @intFromFloat(width)) - 250)) / 2.0,
+                                 .y = @as(f32, @floatFromInt(c.GetScreenHeight() - @as(c_int, @intFromFloat(height)))) / 2.0,
                                  .width = width,
                                  .height = height };
         //----------------------------------------------------------------------------------
@@ -116,15 +116,15 @@ pub fn main() void
         c.DrawRectangle(560, 0, c.GetScreenWidth() - 500, c.GetScreenHeight(), c.Fade(c.LIGHTGRAY, 0.3));
 
         if (draw_rect) c.DrawRectangleRec(rec, c.Fade(c.GOLD, 0.6));
-        if (draw_rounded_rect) c.DrawRectangleRounded(rec, roundness, @intFromFloat(c_int, segments), c.Fade(c.MAROON, 0.2));
-        if (draw_rounded_lines) c.DrawRectangleRoundedLines(rec, roundness, @intFromFloat(c_int, segments), line_thick, c.Fade(c.MAROON, 0.4));
+        if (draw_rounded_rect) c.DrawRectangleRounded(rec, roundness, @intFromFloat(segments), c.Fade(c.MAROON, 0.2));
+        if (draw_rounded_lines) c.DrawRectangleRoundedLines(rec, roundness, @intFromFloat(segments), line_thick, c.Fade(c.MAROON, 0.4));
 
         // Draw GUI controls
         //------------------------------------------------------------------------------
         _ = c.GuiSliderBar(.{ .x = 640.0, .y = 40.0, .width = 105.0, .height = 20.0 }, "Width", null,
-                           &width, 0.0, @floatFromInt(f32, c.GetScreenWidth()) - 300.0);
+                           &width, 0.0, @as(f32, @floatFromInt(c.GetScreenWidth())) - 300.0);
         _ = c.GuiSliderBar(.{ .x = 640.0, .y = 70.0, .width = 105.0, .height = 20.0 }, "Height", null,
-                           &height, 0.0, @floatFromInt(f32, c.GetScreenHeight()) - 50.0);
+                           &height, 0.0, @as(f32, @floatFromInt(c.GetScreenHeight())) - 50.0);
         _ = c.GuiSliderBar(.{ .x = 640.0, .y = 140.0, .width = 105.0, .height = 20.0 }, "Roundness", null,
                            &roundness, 0.0, 1.0);
         _ = c.GuiSliderBar(.{ .x = 640.0, .y = 170.0, .width = 105.0, .height = 20.0 }, "Thickness", null,
@@ -140,8 +140,14 @@ pub fn main() void
                           &draw_rect);
         //------------------------------------------------------------------------------
 
-        c.DrawText(c.TextFormat("MODE: %s", @ptrCast([*c]const u8, if (segments >= 4) "MANUAL" else "AUTO")), 640, 280, 10,
-                   if (segments >= 4) c.MAROON else c.DARKGRAY);
+        // @ptrCast -> [*c]const u8: https://github.com/ziglang/zig/issues/16234
+        // -- This code causes Zig compiler (0.11.0-dev.3859+88284c124) to segfault, see
+        // -- https://github.com/ziglang/zig/issues/16197
+        //c.DrawText(c.TextFormat("MODE: %s", @ptrCast(if (segments >= 4) "MANUAL" else "AUTO")), 640, 280, 10,
+        //           if (segments >= 4) c.MAROON else c.DARKGRAY);
+        // -- This does not
+        const text = if (segments >= 4) "MODE: MANUAL" else "MODE: AUTO";
+        c.DrawText(text, 640, 280, 10, if (segments >= 4) c.MAROON else c.DARKGRAY);
 
         c.DrawFPS(10, 10);
         //---------------------------------------------------------------------------------

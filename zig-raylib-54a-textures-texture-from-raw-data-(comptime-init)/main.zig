@@ -85,7 +85,8 @@ pub fn main() void
     const checked_im = c.Image
     {
         // Using @constCast to discard const qualifier
-        .data = @ptrCast(?*anyopaque, @constCast(&pixels)), // We can assign pixels directly to data
+        // @ptrCast -> ?*anyopaque is not mandatory anymore
+        .data = @constCast(&pixels), // We can assign pixels directly to data
         .width = width,
         .height = height,
         .format = c.PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,

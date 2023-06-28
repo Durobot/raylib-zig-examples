@@ -47,7 +47,7 @@ pub fn main() void
     // NOTE: On 2D drawing it won't be noticeable, it looks like FILTER_BILINEAR
     c.GenTextureMipmaps(&font.texture);
 
-    var font_size = @floatFromInt(f32, font.baseSize);
+    var font_size: f32 = @floatFromInt(font.baseSize);
     var font_pos = c.Vector2{ .x = 40.0, .y = screen_height / 2.0 - 80.0 };
     var text_size = c.Vector2{ .x = 0.0, .y = 0.0 };
 
@@ -98,7 +98,7 @@ pub fn main() void
             if (c.IsFileExtension(droppedFiles.paths[0], ".ttf"))
             {
                 c.UnloadFont(font);
-                font = c.LoadFontEx(droppedFiles.paths[0], @intFromFloat(c_int, font_size), 0, 0);
+                font = c.LoadFontEx(droppedFiles.paths[0], @intFromFloat(font_size), 0, 0);
             }
 
             c.UnloadDroppedFiles(droppedFiles);    // Unload filepaths from memory

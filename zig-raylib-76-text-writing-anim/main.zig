@@ -57,7 +57,8 @@ pub fn main() void
 
         c.ClearBackground(c.RAYWHITE);
 
-        c.DrawText(c.TextSubtext(message, 0, @intCast(c_int, frames_counter / 10)), 210, 160, 20, c.MAROON);
+        // @intCast -> c_int
+        c.DrawText(c.TextSubtext(message, 0, @intCast(frames_counter / 10)), 210, 160, 20, c.MAROON);
 
         c.DrawText("PRESS [ENTER] to RESTART!", 240, 260, 20, c.LIGHTGRAY);
         c.DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, c.LIGHTGRAY);

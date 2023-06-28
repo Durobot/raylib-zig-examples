@@ -144,7 +144,7 @@ pub fn main() void
         var dirtyLights = false;
         for (0..max_lights) |i|
         {
-            if (updateLight(@intCast(u32, i), boxes[0..max_boxes]))
+            if (updateLight(@intCast(i), boxes[0..max_boxes])) // @intCast -> u32
                 dirtyLights = true;
         }
 
@@ -167,7 +167,7 @@ pub fn main() void
                 if (lights[i].active)
                     c.DrawTextureRec(lights[i].mask.texture,
                                      .{ .x = 0, .y = 0,
-                                        .width = @floatFromInt(f32, c.GetScreenWidth()), .height = @floatFromInt(f32, -c.GetScreenHeight()) },
+                                        .width = @floatFromInt(c.GetScreenWidth()), .height = @floatFromInt(-c.GetScreenHeight()) },
                                      c.Vector2Zero(), c.WHITE);
             }
 
@@ -188,22 +188,22 @@ pub fn main() void
         // Draw the tile background
         c.DrawTextureRec(background_texture,
                          .{ .x = 0.0, .y = 0.0,
-                            .width = @floatFromInt(f32, c.GetScreenWidth()),
-                            .height = @floatFromInt(f32, c.GetScreenHeight()) },
+                            .width = @floatFromInt(c.GetScreenWidth()),
+                            .height = @floatFromInt(c.GetScreenHeight()) },
                          c.Vector2Zero(), c.WHITE);
 
         // Overlay the shadows from all the lights
         c.DrawTextureRec(light_mask.texture,
                          .{ .x = 0.0, .y = 0.0,
-                            .width = @floatFromInt(f32, c.GetScreenWidth()),
-                            .height = @floatFromInt(f32, -c.GetScreenHeight()) },
+                            .width = @floatFromInt(c.GetScreenWidth()),
+                            .height = @floatFromInt(-c.GetScreenHeight()) },
                          c.Vector2Zero(), c.ColorAlpha(c.WHITE, if (show_lines) 0.75 else 1.0));
 
         // Draw the lights
         for (0..max_lights) |i|
             if (lights[i].active)
-                c.DrawCircle(@intFromFloat(c_int, lights[i].position.x),
-                             @intFromFloat(c_int, lights[i].position.y), 10,
+                c.DrawCircle(@intFromFloat(lights[i].position.x),
+                             @intFromFloat(lights[i].position.y), 10,
                              if (i == 0) c.YELLOW else c.WHITE);
 
         if (show_lines)
@@ -216,8 +216,8 @@ pub fn main() void
                 if (c.CheckCollisionRecs(boxes[b], lights[0].bounds))
                     c.DrawRectangleRec(boxes[b], c.PURPLE);
 
-                c.DrawRectangleLines(@intFromFloat(c_int, boxes[b].x), @intFromFloat(c_int, boxes[b].y),
-                                     @intFromFloat(c_int, boxes[b].width), @intFromFloat(c_int, boxes[b].height),
+                c.DrawRectangleLines(@intFromFloat(boxes[b].x), @intFromFloat(boxes[b].y),
+                                     @intFromFloat(boxes[b].width), @intFromFloat(boxes[b].height),
                                      c.DARKBLUE);
             }
 
@@ -247,10 +247,10 @@ fn setupBoxes(boxes: []c.Rectangle) void
     {
         boxes[i] =
         .{
-            .x = @floatFromInt(f32, c.GetRandomValue(0, c.GetScreenWidth())),
-            .y = @floatFromInt(f32, c.GetRandomValue(0, c.GetScreenHeight())),
-            .width = @floatFromInt(f32, c.GetRandomValue(10, 100)),
-            .height = @floatFromInt(f32, c.GetRandomValue(10, 100))
+            .x = @floatFromInt(c.GetRandomValue(0, c.GetScreenWidth())),
+            .y = @floatFromInt(c.GetRandomValue(0, c.GetScreenHeight())),
+            .width = @floatFromInt(c.GetRandomValue(10, 100)),
+            .height = @floatFromInt(c.GetRandomValue(10, 100))
         };
     }
 }
@@ -384,8 +384,8 @@ fn drawLightMask(slot: u32) void
 
     // If we are valid, then draw the light radius to the alpha mask
     if (lights[slot].valid)
-        c.DrawCircleGradient(@intFromFloat(c_int, lights[slot].position.x),
-                             @intFromFloat(c_int, lights[slot].position.y),
+        c.DrawCircleGradient(@intFromFloat(lights[slot].position.x),
+                             @intFromFloat(lights[slot].position.y),
                              lights[slot].outer_radius, c.ColorAlpha(c.WHITE, 0), c.WHITE);
 
     c.rlDrawRenderBatchActive();
