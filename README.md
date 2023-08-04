@@ -55,7 +55,8 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 
 **On Linux**:
 
-1. Install Zig. Version 0.11 is required. At the time of writing (May 2023), Zig 0.11 has not been released yet, but development builds of Zig 0.11 are available. The easiest way to install one of them is to just download the latest archived Zig for your OS from https://ziglang.org/download/. Most likely it will be named **zig-linux-x86_64-0.11.\*-dev\*.tar.xz**.
+1. Install Zig. Version 0.11 is required. Download zig 0.11 for Linux from https://ziglang.org/download/. The file is (currently) named **zig-linux-x86_64-0.11.0.tar.xz**.
+   Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
 
    Unpack it and add this folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
 
@@ -115,7 +116,8 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 
 **On Windows**:
 
-1. Install Zig. Version 0.11 is required. At the time of writing (May 2023), Zig 0.11 has not been released yet, but development builds of Zig 0.11 are available. The easiest way to install one of them is to just download the latest archived Zig for your OS from https://ziglang.org/download/. Most likely it will be named **zig-windows-x86_64-0.11.\*-dev\*.zip**.
+1. Install Zig. Version 0.11 is required. Download zig 0.11 for Linux from https://ziglang.org/download/. The file is (currently) named **zig-windows-x86_64-0.11.0.zip**.
+   Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
 
    Unpack it and add this folder to environment variable PATH.
 
