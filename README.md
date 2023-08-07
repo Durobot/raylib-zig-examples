@@ -56,9 +56,9 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 **On Linux**:
 
 1. Install Zig. Version 0.11 is required. Download zig 0.11 for Linux from https://ziglang.org/download/. The file is (currently) named **zig-linux-x86_64-0.11.0.tar.xz**.
-   Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Or you can try a development build of **Zig 0.12**. Latest version I have tested the project with was **0.12.0-dev.15+1c7798a3c**, and it worked. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
 
-   Unpack it and add this folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
+   Unpack your version of Zig and add its folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
 
    `export PATH="$PATH:/path/to/zig"`
 
@@ -117,9 +117,10 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 **On Windows**:
 
 1. Install Zig. Version 0.11 is required. Download zig 0.11 for Linux from https://ziglang.org/download/. The file is (currently) named **zig-windows-x86_64-0.11.0.zip**.
-   Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
 
-   Unpack it and add this folder to environment variable PATH.
+   Or you can try a development build of **Zig 0.12**. Latest version I have tested the project with was **0.12.0-dev.15+1c7798a3c**, and it worked. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+
+   Unpack your version of Zig and add its folder to environment variable PATH.
 
 2. Install raylib. These examples were built using raylib 4.5.0, but an earlier or later version may work too. 
 
