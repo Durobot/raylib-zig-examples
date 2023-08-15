@@ -165,7 +165,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 
    Running `zig build...` should create `zig-out` folder, with two folders inside: `include` and `lib`, these contain raylib header files and static library, respectively.
 
-   In `raylib-zig-examples`, in `build_example.sh`set `RAYLIB_PATH` variable to the raylib path and make sure the values of `RAYLIB_INCLUDE_PATH`, `RAYLIB_EXTERNAL_INCLUDE_PATH` and `RAYLIB_LIB_PATH` make sense.
+   In `raylib-zig-examples`, in `build_example.bat`set `RAYLIB_PATH` variable to the raylib path and make sure the values of `RAYLIB_INCLUDE_PATH`, `RAYLIB_EXTERNAL_INCLUDE_PATH` and `RAYLIB_LIB_PATH` make sense.
 
 3. Build the examples.  You can use `build_example.bat` to either build individual examples by providing the example number, e.g. `build_example.bat 03`, or build them all: `build_example.bat all`.
 
