@@ -51,5 +51,5 @@ fi
 #echo 'tmp_raylib_lib_arg = '
 #echo "$tmp_raylib_lib_arg"
 
-echo "zig build-exe main.zig ${tmp_raylib_zig_build_mode} ${tmp_raylib_include_arg} -idirafter ./ ${tmp_raylib_lib_arg}"
-zig build-exe main.zig ${tmp_raylib_zig_build_mode} ${tmp_raylib_include_arg} -idirafter ./ ${tmp_raylib_lib_arg}
+echo "zig build-exe main.zig raygui_impl.c ${tmp_raylib_zig_build_mode} ${tmp_raylib_include_arg} -idirafter ./ ${tmp_raylib_lib_arg}"
+zig build-exe main.zig raygui_impl.c ${tmp_raylib_zig_build_mode} ${tmp_raylib_include_arg} -idirafter ./ ${tmp_raylib_lib_arg}

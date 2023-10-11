@@ -73,7 +73,8 @@ const c = @cImport(
 {
     @cInclude("stddef.h"); // NULL
     @cInclude("raylib.h");
-    @cDefine("RAYGUI_IMPLEMENTATION", {});
+    //@cDefine("RAYGUI_IMPLEMENTATION", {}); - Moved to raygui_impl.c
+    //                                         Here we only need raygui declarations, not actual function bodies.
     @cInclude("raygui.h"); // Required for GUI controls
 });
 
