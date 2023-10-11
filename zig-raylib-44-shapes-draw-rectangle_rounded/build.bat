@@ -29,7 +29,7 @@ REM echo RAYLIB_ZIG_BUILD_MODE: %RAYLIB_ZIG_BUILD_MODE%
 
 @echo on
 
-zig build-exe main.zig raygui_impl.c %RAYLIB_ZIG_BUILD_MODE% -idirafter . -idirafter %RAYLIB_INCLUDE_PATH% -idirafter %RAYLIB_EXTERNAL_INCLUDE_PATH% -L%RAYLIB_LIB_PATH% -lraylib -lopengl32 -lgdi32 -lwinmm -lc
+zig build-exe main.zig raygui_impl.c %RAYLIB_ZIG_BUILD_MODE% -idirafter .\ -idirafter %RAYLIB_INCLUDE_PATH% -idirafter %RAYLIB_EXTERNAL_INCLUDE_PATH% -L%RAYLIB_LIB_PATH% -lraylib -lopengl32 -lgdi32 -lwinmm -lc
 
 @echo off
 
