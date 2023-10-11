@@ -56,12 +56,13 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 **On Linux**:
 
 1. Install Zig. Version **0.11** (or 0.12 development build, see below) is required. Download zig 0.11 for Linux from https://ziglang.org/download/. The file is (currently) named **zig-linux-x86_64-0.11.0.tar.xz**.
+   
    Latest version of Zig **0.12** I have tested the project with was **0.12.0-dev.876+aaf46187a**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
-
+   
    Unpack your version of Zig and add its folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
-
+   
    `export PATH="$PATH:/path/to/zig"`
-
+   
    Alternatively, you can install Zig from your distribution's repositories, if they contain Zig 0.11.
    
 2. Install raylib. These examples were built using raylib 4.5.0, but an earlier or later version may work too. Use one of the following methods:
