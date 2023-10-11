@@ -67,7 +67,7 @@ pub fn main() void
 
     const spacings = [max_fonts]u32{ 2, 4, 8, 4, 3, 4, 4, 1 };
 
-    var positions: [max_fonts]c.Vector2 = .{}; // initialize with default values
+    var positions = [max_fonts]c.Vector2{ .{}, .{}, .{}, .{}, .{}, .{}, .{}, .{} }; // initialize with default values
 
     for (&positions, fonts, messages, spacings, 0..) |*pos, font, msg, spacing, i|
     {
