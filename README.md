@@ -4,6 +4,8 @@ These are some of [raylib](https://www.raylib.com/) ([raylib on github](https://
 
 [See the screenshot gallery](sshots/sshots.md)!
 
+Please notice, these are **raylib 4.5** examples, they have been updated to compile with either raylib 4.5 or raylib 5.0, but the content of example programs has remained the same. On Windows, I have not tested them with raylib 5.0 yet.
+
 The examples don't use any bindings or some other intermediate layer between Zig code and raylib. Instead, Zig's built-in translate-C feature takes care of everything (well, almost, see below).
 
 For whatever reason, example [27](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-27-core-custom-frame-control) (custom frame control) does not work properly on Windows, and runs with certain jerkiness on Linux. My knowledge of raylib is not enough to figure out why.
@@ -57,7 +59,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 
 1. Install Zig. Version **0.11** (or 0.12 development build, see below) is required. Download zig 0.11 for Linux from https://ziglang.org/download/. The file is named **zig-linux-x86_64-0.11.0.tar.xz**.
    
-   Latest version of Zig **0.12** I have tested the project with was **0.12.0-dev.1607+f8b38a174**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Latest version of Zig **0.12** I have tested the project with was **0.12.0-dev.1647+325e0f5f0**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
    
    Unpack your version of Zig and add its folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
    
@@ -65,7 +67,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
    
    Alternatively, you can install Zig from your distribution's repositories, if they contain Zig 0.11.
    
-2. Install raylib. These examples were built using raylib 4.5.0, but an earlier or later version may work too. Use one of the following methods:
+2. Install raylib. Versions 4.5 and 5.0 work. Earlier or later version may work too. Use one of the following methods:
    
    1. Install it from your distribution's repositories. For example on Arch you can do it with `pacman -S raylib` command.
    

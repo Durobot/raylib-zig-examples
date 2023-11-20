@@ -32,9 +32,16 @@ pub fn main() void
     c.InitWindow(screen_width, screen_height, "raylib [textures] example - procedural images generation");
     defer c.CloseWindow(); // Close window and OpenGL context
 
-    // These functions return c.Image
-    const vertical_gradient = c.GenImageGradientV(screen_width, screen_height, c.RED, c.BLUE);
-    const horizontal_gradient = c.GenImageGradientH(screen_width, screen_height, c.RED, c.BLUE);
+    const vertical_gradient = if (c.RAYLIB_VERSION_MAJOR >= 5) // - Raylib v5.0 works
+            c.GenImageGradientLinear(screen_width, screen_height, 0, c.RED, c.BLUE) // c.Image
+        else // - Raylib v4.5 is supported, older version may work, but no promises
+            c.GenImageGradientV(screen_width, screen_height, c.RED, c.BLUE); // c.Image
+
+    const horizontal_gradient = if (c.RAYLIB_VERSION_MAJOR >= 5) // - Raylib v5.0 works
+            c.GenImageGradientLinear(screen_width, screen_height, 0, c.RED, c.BLUE) // c.Image
+        else // - Raylib v4.5 is supported, older version may work, but no promises
+            c.GenImageGradientH(screen_width, screen_height, c.RED, c.BLUE); // c.Image
+
     const radial_gradient = c.GenImageGradientRadial(screen_width, screen_height, 0.0, c.WHITE, c.BLACK);
     const checked = c.GenImageChecked(screen_width, screen_height, 32, 32, c.RED, c.BLUE);
     const white_noise = c.GenImageWhiteNoise(screen_width, screen_height, 0.5);

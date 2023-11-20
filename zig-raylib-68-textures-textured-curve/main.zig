@@ -87,8 +87,16 @@ pub fn main() void
 fn DrawCurve() void
 {
     if (show_curve)
-        c.DrawLineBezierCubic(curve_start_pos, curve_end_pos,
-                              curve_start_pos_tangent, curve_end_pos_tangent, 2, c.BLUE);
+    {
+        if (c.RAYLIB_VERSION_MAJOR >= 5) // - Raylib v5.0 works
+        {
+            c.DrawSplineSegmentBezierCubic(curve_start_pos, curve_start_pos_tangent,
+                                           curve_end_pos, curve_end_pos_tangent, 2.0, c.BLUE);
+        }
+        else // - Raylib v4.5 is supported, older version may work, but no promises
+            c.DrawLineBezierCubic(curve_start_pos, curve_end_pos,
+                                  curve_start_pos_tangent, curve_end_pos_tangent, 2.0, c.BLUE);
+    }
 
     // Draw the various control points and highlight where the mouse is
     c.DrawLineV(curve_start_pos, curve_start_pos_tangent, c.SKYBLUE);
