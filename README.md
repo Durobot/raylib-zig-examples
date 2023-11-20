@@ -4,13 +4,13 @@ These are some of [raylib](https://www.raylib.com/) ([raylib on github](https://
 
 [See the screenshot gallery](sshots/sshots.md)!
 
-Please notice, these are **raylib 4.5** examples, they have been updated to compile with either raylib 4.5 or raylib 5.0, but the content of example programs has remained the same. On Windows, I have not tested them with raylib 5.0 yet.
+Please note these are **raylib 4.5** examples, they have been updated to compile with either raylib **4.5** or raylib **5.0**, but the content of example programs has not been updated to match raylib 5.0 examples.
 
 The examples don't use any bindings or some other intermediate layer between Zig code and raylib. Instead, Zig's built-in translate-C feature takes care of everything (well, almost, see below).
 
 For whatever reason, example [27](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-27-core-custom-frame-control) (custom frame control) does not work properly on Windows, and runs with certain jerkiness on Linux. My knowledge of raylib is not enough to figure out why.
 
-I have done some minor modifications to the code, like changing camelCase variable names to snake_case, to fit Zig naming conventions.
+I have done some minor modifications to the code, like changing *camelCase* variable names to *snake_case*, to fit Zig naming conventions.
 
 Some of the examples are presented in multiple versions ([14a](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-14a-core-3d-picking-(original)) and [14b](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-14b-core-3d-picking-(2-cubes)); [54a](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-54a-textures-texture-from-raw-data-(comptime-init)) and [54b](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-54b-textures-texture-from-raw-data-(runtime-init)); [87a](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-87a-models-mesh-generation-(MemAlloc-calloc)) and [87b](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-87b-models-mesh-generation-(Zig-allocator))), see the comments in the Zig code.
 
@@ -67,7 +67,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
    
    Alternatively, you can install Zig from your distribution's repositories, if they contain Zig 0.11.
    
-2. Install raylib. Versions 4.5 and 5.0 work. Earlier or later version may work too. Use one of the following methods:
+2. Install raylib. Versions 4.5 and 5.0 do work. Earlier or later version may work too. Use one of the following methods:
    
    1. Install it from your distribution's repositories. For example on Arch you can do it with `pacman -S raylib` command.
    
@@ -77,9 +77,19 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
    
    2. Build raylib from source code. Download raylib [from github](https://github.com/raysan5/raylib/tags). Click "tar.gz" under the release you want to download, or click "Downloads", then scroll down and click "Source code (tar.gz)". Unpack the downloaded archive.
    
-      Now, in order to make raylib and/or raylib-zig-examples compile without errors, do one of the following two things, depending on your version of raylib:
+      Now, in order to make raylib and/or raylib-zig-examples compile without errors, do one of the following, depending on your version of raylib:
       
-      1. **If** `build.zig` In the root folder **contains** the following lines:
+      1. **If** you're using raylib **5.0**, open `src\build.zig`, find lines containing `lib.installHeader` (they should be in `pub fn build`), and add the following line after them:
+      
+         ```zig
+         lib.installHeader("src/rcamera.h", "rcamera.h");
+         ```
+      
+         Otherwise example 13 won't compile.
+      
+      2. **If** you're using raylib **4.5**, do one of the following:
+      
+         a. **If** `build.zig` in raylib root folder **contains** the following lines:
       
          ```zig
          const lib = raylib.addRaylib(b, target, optimize);
@@ -97,7 +107,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
          b.installArtifact(lib);
          ```
       
-      2. **If**, on the other hand, build.zig in raylib's root folder **does not** contain `lib.install();` (see [this commit](https://github.com/raysan5/raylib/commit/6b92d71ea1c4e3072b26f25e7b8bd1d1aa8e781f)), then in `src/build.zig`, in function `pub fn build(b: *std.Build) void`, after `lib.installHeader("src/raylib.h", "raylib.h");`, add these lines:
+         b. **If**, on the other hand, `build.zig` in raylib's root folder **does not** contain `lib.install();` (see [this commit](https://github.com/raysan5/raylib/commit/6b92d71ea1c4e3072b26f25e7b8bd1d1aa8e781f)), then in `src/build.zig`, in function `pub fn build(b: *std.Build) void`, after `lib.installHeader("src/raylib.h", "raylib.h");`, add these lines:
       
          ```zig
          lib.installHeader("src/rlgl.h", "rlgl.h");
@@ -109,7 +119,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
       
       This should create `zig-out` folder, with two folders inside: `include` and `lib`, these contain raylib header files and static library, respectively.
       
-      In `raylib-zig-examples`, in `build_example.sh`set `RAYLIB_PATH` variable to the raylib path and make sure the values of `RAYLIB_INCLUDE_PATH`, `RAYLIB_EXTERNAL_INCLUDE_PATH` and `RAYLIB_LIB_PATH` make sense.
+      In `raylib-zig-examples`, in `build_example.sh`set `RAYLIB_PATH` variable to the correct raylib path and make sure the values of `RAYLIB_INCLUDE_PATH`, `RAYLIB_EXTERNAL_INCLUDE_PATH` and `RAYLIB_LIB_PATH` make sense.
    
 3. Build the examples.  You can use `build_example.sh` to either build individual examples by providing the example number, e.g. `./build_example.sh 03`, or build them all: `./build_example.sh all`.
 
@@ -129,9 +139,19 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 
    Build raylib from source code. Download raylib [from github](https://github.com/raysan5/raylib/tags). Click "zip" under the release you want to download, or click "Downloads", then scroll down and click "Source code (zip)".
 
-   Unpack the downloaded archive. Now, in order to make raylib and/or raylib-zig-examples compile without errors, do one of the following two things, depending on your version of raylib:
+   Unpack the downloaded archive. Now, in order to make raylib and/or raylib-zig-examples compile without errors, do one of the following, depending on your version of raylib:
 
-   1. **If** `build.zig` In the root folder **contains** the following lines:
+   1. **If** you're using raylib **5.0**, open `src\build.zig`, find lines containing `lib.installHeader` (they should be in `pub fn build`), and add the following line after them:
+
+      ```zig
+      lib.installHeader("src/rcamera.h", "rcamera.h");
+      ```
+
+      Otherwise example 13 won't compile.
+
+   2. **If** you're using raylib **4.5**, do one of the following:
+
+      a. **If** `build.zig` in raylib root folder **contains** the following lines:
 
       ```zig
       const lib = raylib.addRaylib(b, target, optimize);
@@ -149,7 +169,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
       b.installArtifact(lib);
       ```
 
-   2. **If**, on the other hand, build.zig in raylib's root folder **does not** contain `lib.install();` (see [this commit](https://github.com/raysan5/raylib/commit/6b92d71ea1c4e3072b26f25e7b8bd1d1aa8e781f)), then in `src/build.zig`, in function `pub fn build(b: *std.Build) void`, after `lib.installHeader("src/raylib.h", "raylib.h");`, add these lines:
+      b. **If**, on the other hand, `build.zig` in raylib's root folder **does not** contain `lib.install();` (see [this commit](https://github.com/raysan5/raylib/commit/6b92d71ea1c4e3072b26f25e7b8bd1d1aa8e781f)), then in `src/build.zig`, in function `pub fn build(b: *std.Build) void`, after `lib.installHeader("src/raylib.h", "raylib.h");`, add these lines:
 
       ```zig
       lib.installHeader("src/rlgl.h", "rlgl.h");
@@ -166,9 +186,9 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
    error: lld-link: undefined symbol: __stack_chk_guard
    ```
 
-   Running `zig build...` should create `zig-out` folder, with two folders inside: `include` and `lib`, these contain raylib header files and static library, respectively.
+   Running zig build... should create `zig-out` folder, with two folders inside: `include` and `lib`, these contain raylib header files and static library, respectively.
 
-   In `raylib-zig-examples`, in `build_example.bat`set `RAYLIB_PATH` variable to the raylib path and make sure the values of `RAYLIB_INCLUDE_PATH`, `RAYLIB_EXTERNAL_INCLUDE_PATH` and `RAYLIB_LIB_PATH` make sense.
+   In `raylib-zig-examples`, in `build_example.bat`set `RAYLIB_PATH` variable to the correct raylib path and make sure the values of `RAYLIB_INCLUDE_PATH`, `RAYLIB_EXTERNAL_INCLUDE_PATH` and `RAYLIB_LIB_PATH` make sense.
 
 3. Build the examples.  You can use `build_example.bat` to either build individual examples by providing the example number, e.g. `build_example.bat 03`, or build them all: `build_example.bat all`.
 
