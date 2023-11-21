@@ -51,9 +51,9 @@ pub fn main() void
     c.InitWindow(screen_width, screen_height, "raylib [core] example - split screen");
     defer c.CloseWindow(); // Close window and OpenGL context
 
-    var screen_player1 = c.LoadRenderTexture(screen_width / 2, screen_height); // RenderTexture
+    const screen_player1 = c.LoadRenderTexture(screen_width / 2, screen_height); // RenderTexture
     defer c.UnloadRenderTexture(screen_player1); // Unload render texture
-    var screen_player2 = c.LoadRenderTexture(screen_width / 2, screen_height); // RenderTexture
+    const screen_player2 = c.LoadRenderTexture(screen_width / 2, screen_height); // RenderTexture
     defer c.UnloadRenderTexture(screen_player2); // Unload render texture
 
     // Build a flipped rectangle the size of the split view to use for drawing later

@@ -33,7 +33,7 @@ pub fn main() void
     defer c.CloseWindow(); // Close window and OpenGL context
 
     var touch_pos = c.Vector2{ .x = 0.0, .y = 0.0 };
-    var touch_area = c.Rectangle{ .x = 220, .y = 10, .width = screen_width - 230, .height = screen_height - 20 };
+    const touch_area = c.Rectangle{ .x = 220, .y = 10, .width = screen_width - 230, .height = screen_height - 20 };
 
     var gestures_count: usize = 0;
     var gesture_strings: [max_gesture_strings][32]u8 = undefined;

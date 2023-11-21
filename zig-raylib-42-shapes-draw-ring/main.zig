@@ -145,7 +145,7 @@ pub fn main() void
         _ = c.GuiCheckBox(.{ .x = 600, .y = 380, .width = 20, .height = 20 }, "Draw CircleLines", &draw_circle_lines);
         //------------------------------------------------------------------------------
 
-        var min_segments: i32 = @intFromFloat(@ceil((end_angle - start_angle) / 90.0));
+        const min_segments: i32 = @intFromFloat(@ceil((end_angle - start_angle) / 90.0));
         // @ptrCast -> [*c]const u8: https://github.com/ziglang/zig/issues/16234
         // -- This code causes Zig compiler (0.11.0-dev.3859+88284c124) to segfault, see
         // -- https://github.com/ziglang/zig/issues/16197
