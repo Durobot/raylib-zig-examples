@@ -19,6 +19,9 @@
 //********************************************************************************************/
 
 const std = @import("std"); // fn std.math.atan2()
+const builtin = @import("builtin"); // Not the same as std.builtin; zig_version, zig_version_string
+const new_atan2 = builtin.zig_version.order(.{ .major = 0, .minor = 12, // comptime is redundant
+                                               .patch = 0, .pre = "dev.2139" }) == .gt;
 const c = @cImport(
 {
     @cInclude("raylib.h");
@@ -65,7 +68,8 @@ pub fn main() void
             dx = iris_left_pos.x - sclera_left_pos.x;
             dy = iris_left_pos.y - sclera_left_pos.y;
 
-            angle = std.math.atan2(f32, dy, dx);
+            if (new_atan2) { angle = std.math.atan2(dy, dx); }
+            else           { angle = std.math.atan2(f32, dy, dx); }
 
             dxx = (sclera_radius - iris_radius) * @cos(angle);
             dyy = (sclera_radius - iris_radius) * @sin(angle);
@@ -80,7 +84,8 @@ pub fn main() void
             dx = iris_right_pos.x - sclera_right_pos.x;
             dy = iris_right_pos.y - sclera_right_pos.y;
 
-            angle = std.math.atan2(f32, dy, dx);
+            if (new_atan2) { angle = std.math.atan2(dy, dx); }
+            else           { angle = std.math.atan2(f32, dy, dx); }
 
             dxx = (sclera_radius - iris_radius) * @cos(angle);
             dyy = (sclera_radius - iris_radius) * @sin(angle);
