@@ -42,7 +42,9 @@ To make things easier, some of the examples come with resource files, necessary 
 
 #### Building the examples
 
-**Note**: some examples require additional header files. I recommend downloading them to the corresponding example's folder, as described in the comments in Zig code. Examples [39](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-39-shapes-easings-ball_anim), [40](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-40-shapes-easings-box_anim), [41](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-41-shapes-easings-rectangle_array) need `reasings.h` from https://github.com/raysan5/raylib/blob/master/examples/others/reasings.h; examples [42](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-42-shapes-draw-ring), [43](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-43-shapes-draw-circle_sector), [44](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-44-shapes-draw-rectangle_rounded) need `raygui.h` from https://github.com/raysan5/raygui/blob/master/src/raygui.h.
+**Note**: some examples require additional header files. I recommend downloading them to the corresponding example's folder, as described in the comments in Zig code.
+
+Examples [39](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-39-shapes-easings-ball_anim), [40](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-40-shapes-easings-box_anim), [41](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-41-shapes-easings-rectangle_array) need `reasings.h` from https://github.com/raysan5/raylib/blob/master/examples/others/reasings.h; examples [42](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-42-shapes-draw-ring), [43](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-43-shapes-draw-circle_sector), [44](https://github.com/Durobot/raylib-zig-examples/tree/main/zig-raylib-44-shapes-draw-rectangle_rounded) need `raygui.h` from https://github.com/raysan5/raygui/blob/master/src/raygui.h.
 
 In other words, the following additional header files are necessary for their respective examples to build:
 
@@ -59,7 +61,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 
 1. Install Zig. Version **0.11** (or 0.12 development build, see below) is required. Download zig 0.11 for Linux from https://ziglang.org/download/. The file is named **zig-linux-x86_64-0.11.0.tar.xz**.
    
-   Latest version of Zig **0.12** I have tested the project with was **0.12.0-dev.3403+b5cef9e8b**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Latest version of Zig **0.12** I have tested the project with was **0.12.0-dev.3489+c808e546a**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
    
    Unpack your version of Zig and add its folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
    
@@ -131,7 +133,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 
 1. Install Zig. Version **0.11** (or 0.12 development build, see below) is required. Download zig 0.11 for Linux from https://ziglang.org/download/. The file is named **zig-windows-x86_64-0.11.0.zip**.
 
-   Latest version of Zig **0.12** I have tested the project with was **0.12.0-dev.3403+b5cef9e8b**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Latest version of Zig **0.12** I have tested the project with was **0.12.0-dev.3489+c808e546a**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
 
    Unpack your version of Zig and add its folder to environment variable PATH.
 
