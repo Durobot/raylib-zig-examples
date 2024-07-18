@@ -60,10 +60,10 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 **On Linux**:
 
 1. Install Zig - download from https://ziglang.org/download/.
-   Version **0.12** (current stable release) is required. **0.11** works too so far, but this may change in the future.
-   A development build of Zig **0.13** is supposed to work, but there occasionally may be a period when the latest and greatest Zig introduced some breaking changes I have not adapted to.
    
-   Latest version of Zig **0.13** I have tested the project with was **0.13.0-dev.46+3648d7df1**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Versions that work are **0.12.0**, **0.12.1**, **0.13.0** (current stable release), and **0.14.0** (nightly development build). **0.11.0** works too so far, but this may change in the future.
+   
+   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.363+c3faae6bf**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
    
    Unpack your version of Zig and add its folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
    
@@ -134,10 +134,10 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 **On Windows**:
 
 1. Install Zig - download from https://ziglang.org/download/.
-   Version **0.12** (current stable release) is required. **0.11** works too so far, but this may change in the future.
-   A development build of Zig **0.13** is supposed to work, but there occasionally may be a period when the latest and greatest Zig introduced some breaking changes I have not adapted to.
+   
+   Versions that work are **0.12.0**, **0.12.1**, **0.13.0** (current stable release), and **0.14.0** (nightly development build). **0.11.0** works too so far, but this may change in the future.
 
-   Latest version of Zig **0.13** I have tested the project with was **0.13.0-dev.46+3648d7df1**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.363+c3faae6bf**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
 
    Unpack your version of Zig and add its folder to environment variable PATH.
 
