@@ -63,7 +63,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
    
    Versions that work are **0.12.0**, **0.12.1**, **0.13.0** (current stable release), and **0.14.0** (nightly development build). **0.11.0** works too so far, but this may change in the future.
    
-   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.363+c3faae6bf**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.367+a57479afc**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
    
    Unpack your version of Zig and add its folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
    
@@ -137,7 +137,7 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
    
    Versions that work are **0.12.0**, **0.12.1**, **0.13.0** (current stable release), and **0.14.0** (nightly development build). **0.11.0** works too so far, but this may change in the future.
 
-   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.363+c3faae6bf**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.367+a57479afc**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
 
    Unpack your version of Zig and add its folder to environment variable PATH.
 
