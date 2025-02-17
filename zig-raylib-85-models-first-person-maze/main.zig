@@ -74,7 +74,7 @@ pub fn main() void
         c.UpdateCamera(&camera, c.CAMERA_FIRST_PERSON);
 
         // Check player collision (we simplify to 2D collision detection)
-        const player_pos = .{ .x = camera.position.x, .y = camera.position.z };
+        const player_pos = c.Vector2{ .x = camera.position.x, .y = camera.position.z };
         const player_radius = 0.1; // Collision radius (player is modelled as a cilinder for collision)
 
         var player_cell_x: i32 = @intFromFloat(player_pos.x - map_pos.x + 0.5);

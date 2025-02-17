@@ -13,17 +13,17 @@ fi
 # These variables are used if examples are built using this bat file
 # If you invoke build.bat files in examples' folders manually, values set in
 # those files are used instead.
-RAYLIB_PATH='/home/my_user/raylib'
-RAYLIB_INCLUDE_PATH="${RAYLIB_PATH}/zig-out/include"
-RAYLIB_EXTERNAL_INCLUDE_PATH="${RAYLIB_PATH}/src/external"
-RAYLIB_LIB_PATH="${RAYLIB_PATH}/zig-out/lib"
+#RAYLIB_PATH='/home/my_user/raylib'
+#RAYLIB_INCLUDE_PATH="${RAYLIB_PATH}/zig-out/include"
+#RAYLIB_EXTERNAL_INCLUDE_PATH="${RAYLIB_PATH}/src/external"
+#RAYLIB_LIB_PATH="${RAYLIB_PATH}/zig-out/lib"
 
 # If raylib is installed in a standard location (e.g. /usr/include and /usr/lib/), set these to
 # empty strings ('')
-#RAYLIB_PATH=''
-#RAYLIB_INCLUDE_PATH=''
-#RAYLIB_EXTERNAL_INCLUDE_PATH=''
-#RAYLIB_LIB_PATH=''
+RAYLIB_PATH=''
+RAYLIB_INCLUDE_PATH=''
+RAYLIB_EXTERNAL_INCLUDE_PATH=''
+RAYLIB_LIB_PATH=''
 
 # One of:
 # -O Debug

@@ -118,7 +118,14 @@ pub fn main() void
 
         if (draw_rect) c.DrawRectangleRec(rec, c.Fade(c.GOLD, 0.6));
         if (draw_rounded_rect) c.DrawRectangleRounded(rec, roundness, @intFromFloat(segments), c.Fade(c.MAROON, 0.2));
-        if (draw_rounded_lines) c.DrawRectangleRoundedLines(rec, roundness, @intFromFloat(segments), line_thick, c.Fade(c.MAROON, 0.4));
+
+        if (draw_rounded_lines)
+        {
+            if ((c.RAYLIB_VERSION_MAJOR == 5 and c.RAYLIB_VERSION_MINOR >= 5) or c.RAYLIB_VERSION_MAJOR > 5)
+            {   c.DrawRectangleRoundedLinesEx(rec, roundness, @intFromFloat(segments), line_thick, c.Fade(c.MAROON, 0.4));   }
+            else
+                c.DrawRectangleRoundedLines(rec, roundness, @intFromFloat(segments), line_thick, c.Fade(c.MAROON, 0.4));
+        }
 
         // Draw GUI controls
         //------------------------------------------------------------------------------

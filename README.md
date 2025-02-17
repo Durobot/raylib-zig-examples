@@ -4,7 +4,7 @@ These are some of [raylib](https://www.raylib.com/) ([raylib on github](https://
 
 [See the screenshot gallery](sshots/sshots.md)!
 
-Please note these are **raylib 4.5** examples, they have been updated to compile with either raylib **4.5** or raylib **5.0**, but the content of example programs has not been updated to match raylib 5.0 examples.
+Please note these are **raylib 4.5** examples, they have been updated to compile with either raylib **4.5**, raylib **5.0** or raylib **5.5**, but the content of example programs has not been updated to match raylib 5.0 or 5.5 examples.
 
 The examples don't use any bindings or some other intermediate layer between Zig code and raylib. Instead, Zig's built-in translate-C feature takes care of everything (well, almost, see below).
 
@@ -61,15 +61,15 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 
 1. Install Zig - download from https://ziglang.org/download/.
    
-   Versions that work are **0.12.0**, **0.12.1**, **0.13.0** (current stable release), and **0.14.0** (nightly development build). **0.11.0** works too so far, but this may change in the future.
+   Versions that work are **0.12.0**, **0.12.1**, **0.13.0** (current stable release), and **0.14.0** (nightly development build). **0.11.0** probably still works too (*come on, really? 0.11?*), but this may change in the future.
    
-   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.367+a57479afc**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.3237+ddff1fa4c**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
    
    Unpack your version of Zig and add its folder to environment variable PATH. In many Linux distributions this is done by adding the following line to the end of `.bashrc` file in your home folder (replace /path/to/zig with the `actual` path, of course):
    
    `export PATH="$PATH:/path/to/zig"`
    
-   Alternatively, you can install Zig from your distribution's repositories, if they contain Zig 0.11.
+   Alternatively, you can install Zig from your distribution's repositories, if they contain Zig 0.12 and up.
    
 2. Install raylib. Versions 4.5 and 5.0 do work. Earlier or later version may work too. Use one of the following methods:
    
@@ -135,9 +135,9 @@ zig-raylib-44-shapes-draw-rectangle_rounded/raygui.h
 
 1. Install Zig - download from https://ziglang.org/download/.
    
-   Versions that work are **0.12.0**, **0.12.1**, **0.13.0** (current stable release), and **0.14.0** (nightly development build). **0.11.0** works too so far, but this may change in the future.
+   Versions that work are **0.12.0**, **0.12.1**, **0.13.0** (current stable release), and **0.14.0** (nightly development build). **0.11.0** probably still works too (*come on, really? 0.11?*), but this may change in the future.
 
-   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.367+a57479afc**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
+   Latest version of Zig **0.14.0** I have tested the project with was **0.14.0-dev.3237+ddff1fa4c**. Later versions may or may not work, you're welcome to try them and raise an issue on github if they don't.
 
    Unpack your version of Zig and add its folder to environment variable PATH.
 
